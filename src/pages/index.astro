@@ -1,0 +1,57 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+const publicDir = path.join(process.cwd(), 'public');
+const IMG_RE = /\.(png|jpe?g|gif|svg|webp|avif)$/i;
+
+function walk(dir: string, rel = ''): string[] {
+  if (!fs.existsSync(dir)) return [];
+  const out: string[] = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name.startsWith('.')) continue;
+    const full = path.join(dir, entry.name);
+    const r = path.posix.join(rel, entry.name);
+    if (entry.isDirectory()) out.push(...walk(full, r));
+    else if (IMG_RE.test(entry.name)) out.push(r);
+  }
+  return out;
+}
+
+const images = walk(publicDir).sort();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>blobs</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 1100px; }
+      h1 { font-size: 1.25rem; }
+      ul { list-style: none; padding: 0; display: grid; gap: 1rem;
+           grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+      li { border: 1px solid #eee; border-radius: 6px; padding: 0.5rem;
+           font-size: 0.75rem; word-break: break-all; }
+      img { width: 100%; height: 140px; object-fit: contain; display: block;
+            background: #fafafa; }
+      a { color: inherit; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <h1>blobs — {images.length} image{images.length === 1 ? '' : 's'}</h1>
+    {images.length === 0 && <p>Drop files under <code>public/</code>.</p>}
+    <ul>
+      {images.map((rel) => (
+        <li>
+          <a href={`${base}/${rel}`}>
+            <img src={`${base}/${rel}`} alt={rel} loading="lazy" />
+            {rel}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </body>
+</html>
