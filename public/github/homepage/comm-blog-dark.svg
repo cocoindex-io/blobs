@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 100" role="img" aria-label="Read the CocoIndex blog">
+  <title>Blog</title>
+  <desc>Read the CocoIndex blog — engineering deep dives, release notes, and tutorials.</desc>
+  <rect width="260" height="100" rx="16" fill="#F5B07F"/>
+  <!-- article / RSS-style icon -->
+  <g transform="translate(28, 30)">
+    <rect x="0" y="0" width="44" height="40" rx="4" fill="#4A2E0D"/>
+    <line x1="8" y1="12" x2="36" y2="12" stroke="#F5B07F" stroke-width="2.4" stroke-linecap="round"/>
+    <line x1="8" y1="22" x2="36" y2="22" stroke="#F5B07F" stroke-width="2.4" stroke-linecap="round"/>
+    <line x1="8" y1="32" x2="28" y2="32" stroke="#F5B07F" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <text x="94" y="58" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.4" fill="#4A2E0D">Blog</text>
+  <text x="94" y="76" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" letter-spacing="0.18em" font-weight="700" fill="rgba(74,46,13,0.8)">READ THE POSTS →</text>
+</svg>

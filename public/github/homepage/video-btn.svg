@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 36" role="img" aria-label="Video walkthrough">
+  <title>Video walkthrough</title>
+  <desc>Play-in-circle icon + "Video walkthrough" label — watch the walkthrough on YouTube.</desc>
+  <defs>
+    <style>
+      .play { animation: pulse 2.4s ease-in-out infinite; transform-origin: 14px 18px; transform-box: fill-box; }
+      @keyframes pulse {
+        0%, 100% { transform: scale(0.96); opacity: 0.9; }
+        50%      { transform: scale(1.05); opacity: 1; }
+      }
+    </style>
+  </defs>
+
+  <!-- pill -->
+  <rect x="0.5" y="4" width="199" height="28" rx="8" fill="rgba(251,106,118,0.08)" stroke="rgba(251,106,118,0.45)" stroke-width="1"/>
+
+  <!-- play in circle -->
+  <g class="play">
+    <circle cx="14" cy="18" r="8" fill="none" stroke="#FB6A76" stroke-width="1.6"/>
+    <path d="M12 14.5 L18 18 L12 21.5 Z" fill="#FB6A76"/>
+  </g>
+
+  <!-- text -->
+  <text x="30" y="23" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="14" font-weight="700" letter-spacing="-0.2" fill="#FB6A76">Video walkthrough</text>
+
+  <!-- arrow -->
+  <g transform="translate(178, 18)" stroke="#FB6A76" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <line x1="0" y1="0" x2="10" y2="0"/>
+    <polyline points="6,-4 10,0 6,4"/>
+  </g>
+</svg>

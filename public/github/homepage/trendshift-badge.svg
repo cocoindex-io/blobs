@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" role="img" aria-label="GitHub Trending · #1 Repository Of The Day">
+  <defs>
+    <style>
+      .shine { animation: sh 3.6s ease-in-out infinite; transform-origin: 100px 60px; transform-box: fill-box; }
+      @keyframes sh {
+        0%, 100% { opacity: 0.9; }
+        50%      { opacity: 1; }
+      }
+    </style>
+  </defs>
+
+  <!-- Rounded pill outline (transparent interior) -->
+  <rect x="4" y="4" width="492" height="112" rx="20" fill="rgba(201,160,255,0.04)" stroke="#A78BFA" stroke-width="2.4"/>
+
+  <!-- ===== Laurel wreath + "1" (left side) ===== -->
+  <g class="shine" transform="translate(100, 60)">
+
+    <!-- stems: two curved paths that frame the "1" and meet at the bottom -->
+    <g fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round">
+      <path d="M -44 24 C -50 8 -52 -10 -36 -28"/>
+      <path d="M  44 24 C  50 8  52 -10  36 -28"/>
+      <path d="M -10 30 Q 0 38 10 30"/>
+    </g>
+
+    <!-- LEFT branch leaves (8 leaves arranged along the stem) -->
+    <g fill="#A78BFA">
+      <ellipse cx="-44" cy="20"  rx="4.5" ry="9"  transform="rotate(30 -44 20)"/>
+      <ellipse cx="-51" cy="10"  rx="4.5" ry="9"  transform="rotate(10 -51 10)"/>
+      <ellipse cx="-54" cy="-2"  rx="4.5" ry="9"  transform="rotate(-10 -54 -2)"/>
+      <ellipse cx="-53" cy="-14" rx="4.5" ry="9"  transform="rotate(-30 -53 -14)"/>
+      <ellipse cx="-48" cy="-24" rx="4.5" ry="9"  transform="rotate(-55 -48 -24)"/>
+      <ellipse cx="-40" cy="-31" rx="4.2" ry="8"  transform="rotate(-75 -40 -31)"/>
+      <!-- inner/under leaves -->
+      <ellipse cx="-34" cy="16"  rx="3.6" ry="7"  transform="rotate(55 -34 16)"/>
+      <ellipse cx="-40" cy="5"   rx="3.6" ry="7"  transform="rotate(35 -40 5)"/>
+      <ellipse cx="-42" cy="-7"  rx="3.6" ry="7"  transform="rotate(15 -42 -7)"/>
+      <ellipse cx="-40" cy="-19" rx="3.6" ry="7"  transform="rotate(-10 -40 -19)"/>
+      <ellipse cx="-34" cy="-27" rx="3.6" ry="7"  transform="rotate(-35 -34 -27)"/>
+    </g>
+
+    <!-- RIGHT branch leaves (mirror) -->
+    <g fill="#A78BFA">
+      <ellipse cx="44"  cy="20"  rx="4.5" ry="9"  transform="rotate(-30 44 20)"/>
+      <ellipse cx="51"  cy="10"  rx="4.5" ry="9"  transform="rotate(-10 51 10)"/>
+      <ellipse cx="54"  cy="-2"  rx="4.5" ry="9"  transform="rotate(10 54 -2)"/>
+      <ellipse cx="53"  cy="-14" rx="4.5" ry="9"  transform="rotate(30 53 -14)"/>
+      <ellipse cx="48"  cy="-24" rx="4.5" ry="9"  transform="rotate(55 48 -24)"/>
+      <ellipse cx="40"  cy="-31" rx="4.2" ry="8"  transform="rotate(75 40 -31)"/>
+      <ellipse cx="34"  cy="16"  rx="3.6" ry="7"  transform="rotate(-55 34 16)"/>
+      <ellipse cx="40"  cy="5"   rx="3.6" ry="7"  transform="rotate(-35 40 5)"/>
+      <ellipse cx="42"  cy="-7"  rx="3.6" ry="7"  transform="rotate(-15 42 -7)"/>
+      <ellipse cx="40"  cy="-19" rx="3.6" ry="7"  transform="rotate(10 40 -19)"/>
+      <ellipse cx="34"  cy="-27" rx="3.6" ry="7"  transform="rotate(35 34 -27)"/>
+    </g>
+
+    <!-- the "1" -->
+    <text x="0" y="6" text-anchor="middle"
+          font-family="Inter, -apple-system, system-ui, sans-serif"
+          font-size="34" font-weight="700" letter-spacing="-0.02em" fill="#A78BFA">1</text>
+  </g>
+
+  <!-- ===== Right text block ===== -->
+  <text x="170" y="47"
+        font-family="Inter, -apple-system, system-ui, sans-serif"
+        font-size="14" letter-spacing="0.18em" font-weight="600" fill="#A78BFA">
+    GITHUB TRENDING
+  </text>
+  <text x="170" y="84"
+        font-family="Inter, -apple-system, system-ui, sans-serif"
+        font-size="26" font-weight="800" letter-spacing="-0.015em" fill="#D4C0FF">
+    #1 Repository Of The Day
+  </text>
+</svg>

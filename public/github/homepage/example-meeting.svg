@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" role="img" aria-label="Meeting notes → knowledge graph starter: pull people, topics, decisions, and action items out of transcripts, Slack, podcasts, or support calls with an LLM extractor, and upsert into Neo4j or Kuzu. Incremental — only changed turns re-extract. Keywords: knowledge graph, entity extraction, meeting intelligence, Neo4j, Kuzu, agent memory, LLM extraction.">
+  <title>Meeting notes → knowledge graph</title>
+  <desc>Built with CocoIndex — a colourful knowledge graph extracted from meeting transcripts. Pink people nodes, yellow topic nodes, mint decision nodes and sky action nodes radiate from a central meeting hub, with colored edges connecting them into a live graph continuously updated into Neo4j or Kuzu.</desc>
+
+  <defs>
+    <linearGradient id="mtg-title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#FFD94A"/>
+      <stop offset="50%"  stop-color="#FF8A9B"/>
+      <stop offset="100%" stop-color="#F5B07F"/>
+    </linearGradient>
+    <style>
+      .pulse { animation: p 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+      @keyframes p { 0%,100% { opacity: 1; transform: scale(1) } 50% { opacity: 0.55; transform: scale(1.18) } }
+      .flow { stroke-dasharray: 4 6; animation: mv 1.4s linear infinite; }
+      @keyframes mv { from { stroke-dashoffset: 0 } to { stroke-dashoffset: -20 } }
+      .pop { transform-origin: center; transform-box: fill-box; animation: pop 9s ease-in-out infinite; }
+      @keyframes pop { 0%,92%,100% { transform: scale(1) } 94%,97% { transform: scale(1.18) } }
+    </style>
+  </defs>
+
+  <!-- BUILT WITH COCOINDEX ❤ tag -->
+  <g transform="translate(16, 14)">
+    <rect width="186" height="24" rx="12" fill="rgba(255,138,155,0.14)"/>
+    <text x="93" y="12" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" letter-spacing="0.16em" font-weight="800" fill="#FF8A9B">BUILT WITH COCOINDEX ❤</text>
+  </g>
+
+  <!-- small "live" indicator top-right -->
+  <g transform="translate(460, 26)" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.18em" font-weight="700">
+    <circle class="pulse" cx="0" cy="0" r="3.4" fill="#6DFFB0"/>
+    <text x="-10" y="0" dominant-baseline="central" text-anchor="end" fill="rgba(252,243,216,0.65)">LIVE</text>
+  </g>
+
+  <!-- Title — same gradient treatment as the flagship hero -->
+  <text x="20" y="66" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="22" font-weight="900" letter-spacing="-0.02em" fill="#FFD94A">Meeting notes <tspan fill="#6DFFB0" font-style="italic">→</tspan> <tspan fill="#FCF3D8">knowledge graph</tspan></text>
+
+  <!-- Left column: 3 meeting note cards -->
+  <g transform="translate(20, 84)" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9">
+    <g>
+      <rect width="92" height="48" rx="7" fill="rgba(252,243,216,0.07)"/>
+      <text x="8" y="14" fill="#FFD94A" font-weight="700">📝 standup</text>
+      <text x="8" y="28" fill="rgba(252,243,216,0.7)">alice · bob</text>
+      <text x="8" y="40" fill="rgba(252,243,216,0.55)">14:02 · today</text>
+    </g>
+    <g transform="translate(0, 58)">
+      <rect width="92" height="48" rx="7" fill="rgba(252,243,216,0.07)"/>
+      <text x="8" y="14" fill="#FFD94A" font-weight="700">📝 Q3 plan</text>
+      <text x="8" y="28" fill="rgba(252,243,216,0.7)">carol · eve</text>
+      <text x="8" y="40" fill="rgba(252,243,216,0.55)">yesterday</text>
+    </g>
+    <g transform="translate(0, 116)">
+      <rect width="92" height="48" rx="7" fill="rgba(252,243,216,0.07)"/>
+      <text x="8" y="14" fill="#FFD94A" font-weight="700">📝 retro</text>
+      <text x="8" y="28" fill="rgba(252,243,216,0.7)">full team</text>
+      <text x="8" y="40" fill="rgba(252,243,216,0.55)">Mon</text>
+    </g>
+  </g>
+
+  <!-- Animated flow arrow from notes column → graph -->
+  <path class="flow" d="M118 160 L 150 160" stroke="#6DFFB0" stroke-width="1.8" fill="none" stroke-linecap="round" marker-end="url(#mtg-arrm)"/>
+  <defs>
+    <marker id="mtg-arrm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#6DFFB0"/>
+    </marker>
+  </defs>
+
+  <!-- ========== KNOWLEDGE GRAPH (right side) ========== -->
+  <!-- edges first so nodes render on top -->
+  <g stroke-width="1.6" fill="none" stroke-linecap="round" stroke-opacity="0.7">
+    <!-- from meeting hub to surrounding nodes -->
+    <line x1="240" y1="180" x2="200" y2="110" stroke="#FF8A9B"/>  <!-- meeting → alice -->
+    <line x1="240" y1="180" x2="300" y2="100" stroke="#FF8A9B"/>  <!-- meeting → bob -->
+    <line x1="240" y1="180" x2="370" y2="130" stroke="#FFD94A"/>  <!-- meeting → launch -->
+    <line x1="240" y1="180" x2="420" y2="190" stroke="#FFD94A"/>  <!-- meeting → roadmap -->
+    <line x1="240" y1="180" x2="400" y2="260" stroke="#6DFFB0"/>  <!-- meeting → ship Q3 -->
+    <line x1="240" y1="180" x2="280" y2="282" stroke="#7FD8FF"/>  <!-- meeting → draft PRD -->
+    <line x1="240" y1="180" x2="180" y2="260" stroke="#7FD8FF"/>  <!-- meeting → hire -->
+    <!-- cross-links -->
+    <line x1="200" y1="110" x2="370" y2="130" stroke="rgba(252,243,216,0.22)"/> <!-- alice → launch -->
+    <line x1="300" y1="100" x2="420" y2="190" stroke="rgba(252,243,216,0.22)"/> <!-- bob → roadmap -->
+    <line x1="370" y1="130" x2="400" y2="260" stroke="rgba(252,243,216,0.22)"/> <!-- launch → ship Q3 -->
+    <line x1="400" y1="260" x2="280" y2="282" stroke="rgba(252,243,216,0.22)"/> <!-- ship Q3 → draft PRD -->
+  </g>
+
+  <!-- meeting hub (center cream node) -->
+  <g transform="translate(240, 180)">
+    <circle r="18" fill="#FCF3D8"/>
+    <text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="11" font-weight="800" fill="#1E0F18">meet</text>
+  </g>
+
+  <!-- PEOPLE nodes (coral) -->
+  <g>
+    <g transform="translate(200, 110)">
+      <circle class="pop" r="12" fill="#FF8A9B"/>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" font-weight="800" fill="#4A0E1A">A</text>
+      <text x="0" y="20" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="700" fill="#FF8A9B">alice</text>
+    </g>
+    <g transform="translate(300, 100)">
+      <circle class="pop" r="12" fill="#FF8A9B" style="animation-delay:2s"/>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" font-weight="800" fill="#4A0E1A">B</text>
+      <text x="0" y="20" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="700" fill="#FF8A9B">bob</text>
+    </g>
+  </g>
+
+  <!-- TOPIC nodes (yellow) -->
+  <g>
+    <g transform="translate(370, 130)">
+      <circle class="pop" r="12" fill="#FFD94A" style="animation-delay:4s"/>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="900" fill="#3D2D00">#</text>
+      <text x="0" y="20" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="700" fill="#FFD94A">launch</text>
+    </g>
+    <g transform="translate(420, 190)">
+      <circle class="pop" r="12" fill="#FFD94A" style="animation-delay:6s"/>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="900" fill="#3D2D00">#</text>
+      <text x="0" y="20" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="700" fill="#FFD94A">roadmap</text>
+    </g>
+  </g>
+
+  <!-- DECISION nodes (mint) -->
+  <g>
+    <g transform="translate(400, 260)">
+      <circle class="pop" r="12" fill="#6DFFB0" style="animation-delay:1s"/>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="11" font-weight="900" fill="#0D3521">✓</text>
+      <text x="0" y="20" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="700" fill="#6DFFB0">ship Q3</text>
+    </g>
+  </g>
+
+  <!-- ACTION nodes (sky) -->
+  <g>
+    <g transform="translate(280, 282)">
+      <circle class="pop" r="12" fill="#7FD8FF" style="animation-delay:3s"/>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="11" font-weight="900" fill="#0B2540">→</text>
+      <text x="0" y="20" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="700" fill="#7FD8FF">draft PRD</text>
+    </g>
+    <g transform="translate(180, 260)">
+      <circle class="pop" r="12" fill="#7FD8FF" style="animation-delay:5s"/>
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="11" font-weight="900" fill="#0B2540">→</text>
+      <text x="0" y="20" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="10" font-weight="700" fill="#7FD8FF">hire 2</text>
+    </g>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(20, 304)" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.14em" font-weight="700">
+    <g>
+      <circle cx="5" cy="0" r="4" fill="#FF8A9B"/>
+      <text x="14" y="0" dominant-baseline="central" fill="#FF8A9B">PEOPLE</text>
+    </g>
+    <g transform="translate(78, 0)">
+      <circle cx="5" cy="0" r="4" fill="#FFD94A"/>
+      <text x="14" y="0" dominant-baseline="central" fill="#FFD94A">TOPICS</text>
+    </g>
+    <g transform="translate(154, 0)">
+      <circle cx="5" cy="0" r="4" fill="#6DFFB0"/>
+      <text x="14" y="0" dominant-baseline="central" fill="#6DFFB0">DECISIONS</text>
+    </g>
+    <g transform="translate(248, 0)">
+      <circle cx="5" cy="0" r="4" fill="#7FD8FF"/>
+      <text x="14" y="0" dominant-baseline="central" fill="#7FD8FF">ACTIONS</text>
+    </g>
+    <text x="460" y="0" text-anchor="end" dominant-baseline="central" fill="rgba(252,243,216,0.55)">Neo4j · Kuzu</text>
+  </g>
+</svg>

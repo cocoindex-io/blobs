@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 220" preserveAspectRatio="none" role="img" aria-label="Source change: one file edited (b.md), one target row re-syncs.">
+  <defs>
+    <marker id="sc-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#BE5133"/>
+    </marker>
+    <marker id="sc-ah-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#532638" opacity="0.45"/>
+    </marker>
+    <style>
+      .pulse  { animation: pulse 2.6s ease-in-out infinite; }
+      @keyframes pulse { 0%,100% { opacity: 0.55 } 50% { opacity: 1 } }
+      .glow   { animation: glow 2.6s ease-in-out infinite; opacity: 0; }
+      @keyframes glow  { 0%,100% { opacity: 0 } 50% { opacity: 1 } }
+      .arrow  { animation: arrow 2.6s ease-in-out infinite; opacity: 0; }
+      @keyframes arrow { 0%,15%,100% { opacity: 0 } 35%,55% { opacity: 1 } }
+    </style>
+  </defs>
+
+  <!-- Tag -->
+  <text x="20" y="28" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.18em" fill="#BE5133" font-weight="700">▸ DATA CHANGE</text>
+
+  <!-- TARGET (left) -->
+  <rect x="20" y="56" width="120" height="140" rx="8" fill="rgba(83,38,56,0.04)" stroke="rgba(83,38,56,0.32)"/>
+  <text x="32" y="76" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.14em" fill="rgba(42,18,27,0.65)" font-weight="600">TARGET</text>
+  <rect x="32" y="84"  width="96" height="20" rx="3" fill="rgba(83,38,56,0.08)"/>
+  <text x="40" y="98"  font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="rgba(42,18,27,0.85)">row · a.py  ✓</text>
+  <rect x="32" y="108" width="96" height="20" rx="3" fill="rgba(83,38,56,0.08)"/>
+  <text x="40" y="122" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="rgba(42,18,27,0.85)">row · b.md</text>
+  <rect x="32" y="132" width="96" height="20" rx="3" fill="rgba(83,38,56,0.08)"/>
+  <text x="40" y="146" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="rgba(42,18,27,0.85)">row · c.pdf ✓</text>
+  <rect x="32" y="156" width="96" height="20" rx="3" fill="rgba(83,38,56,0.08)"/>
+  <text x="40" y="170" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="rgba(42,18,27,0.85)">row · d.ts  ✓</text>
+  <!-- row 2 glow -->
+  <rect class="glow" x="32" y="108" width="96" height="20" rx="3" fill="#BE5133"/>
+  <text class="glow" x="40" y="122" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#FCF3D8" font-weight="700">row · b.md  Δ</text>
+
+  <!-- F (center) -->
+  <rect x="170" y="100" width="100" height="50" rx="6" fill="#2A121B"/>
+  <text x="220" y="118" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.14em" fill="rgba(252,243,216,0.7)">F</text>
+  <text x="220" y="136" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#FCF3D8"><tspan fill="#FB6A76">process</tspan>(src)</text>
+
+  <!-- SOURCE (right) -->
+  <rect x="300" y="56" width="120" height="140" rx="8" fill="rgba(83,38,56,0.04)" stroke="rgba(83,38,56,0.32)"/>
+  <text x="312" y="76" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.14em" fill="rgba(42,18,27,0.65)" font-weight="600">SOURCE</text>
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10">
+    <rect x="312" y="86"  width="44" height="18" rx="3" fill="#E59A63" opacity="0.7"/>
+    <text x="318" y="99"  fill="#2A121B">a.py</text>
+    <rect x="364" y="86"  width="44" height="18" rx="3" fill="#E59A63" opacity="0.7"/>
+    <text x="370" y="99"  fill="#2A121B">b.md</text>
+    <rect x="312" y="110" width="44" height="18" rx="3" fill="#E59A63" opacity="0.7"/>
+    <text x="318" y="123" fill="#2A121B">c.pdf</text>
+    <rect x="364" y="110" width="44" height="18" rx="3" fill="#E59A63" opacity="0.7"/>
+    <text x="370" y="123" fill="#2A121B">d.ts</text>
+  </g>
+  <!-- b.md flash -->
+  <g class="pulse">
+    <rect x="364" y="86" width="44" height="18" rx="3" fill="#BE5133"/>
+    <text x="370" y="99" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="#FCF3D8">b.md Δ</text>
+  </g>
+
+  <!-- arrows (right→left) -->
+  <path d="M298 125 L 274 125" fill="none" stroke="#532638" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#sc-ah-soft)"/>
+  <path d="M168 125 L 144 125" fill="none" stroke="#532638" stroke-opacity="0.45" stroke-width="1.4" marker-end="url(#sc-ah-soft)"/>
+  <path class="arrow" d="M298 125 L 274 125" fill="none" stroke="#BE5133" stroke-width="1.8" marker-end="url(#sc-ah)"/>
+  <path class="arrow" d="M168 125 L 144 125" fill="none" stroke="#BE5133" stroke-width="1.8" marker-end="url(#sc-ah)" style="animation-delay:0.4s"/>
+
+  <!-- footer summary -->
+  <text x="220" y="210" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="rgba(42,18,27,0.7)">
+    <tspan fill="#BE5133" font-weight="700">1 re-embed</tspan> · <tspan fill="#16A534" font-weight="600">3 cached</tspan>
+  </text>
+</svg>

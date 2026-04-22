@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Python, not a DAG">
+  <rect x="6" y="10" width="36" height="28" rx="3" fill="rgba(83,38,56,0.05)" stroke="#532638" stroke-opacity="0.3" stroke-width="1"/>
+  <rect x="11" y="17" width="20" height="2.2" rx="1" fill="#532638" opacity="0.35"/>
+  <rect x="11" y="21" width="14" height="2.2" rx="1" fill="#532638" opacity="0.35"/>
+  <rect x="11" y="26" width="26" height="3.4" rx="1" fill="rgba(190,81,51,0.32)" stroke="#BE5133" stroke-width="1.2"/>
+  <rect x="11" y="32" width="10" height="2.2" rx="1" fill="#532638" opacity="0.35"/>
+  <text x="37" y="24" text-anchor="end" font-family="JetBrains Mono, ui-monospace, monospace" font-size="5" font-weight="700" fill="#BE5133" letter-spacing="0.05em">def</text>
+</svg>

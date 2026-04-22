@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 100" role="img" aria-label="Follow @cocoindex_io on X">
+  <title>X</title>
+  <desc>Follow @cocoindex_io on X (formerly Twitter) — release notes, demos, launches, AI data pipeline updates.</desc>
+  <rect width="260" height="100" rx="16" fill="#000000"/>
+  <!-- X logo (Simple Icons path), scaled large -->
+  <g transform="translate(28, 28) scale(1.85)" fill="#FFFFFF">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </g>
+  <text x="90" y="58" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="26" font-weight="800" letter-spacing="-0.4" fill="#FFFFFF">@cocoindex_io</text>
+  <text x="90" y="76" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" letter-spacing="0.18em" font-weight="700" fill="rgba(255,255,255,0.8)">FOLLOW ON X →</text>
+</svg>

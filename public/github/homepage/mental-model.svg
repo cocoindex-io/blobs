@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" role="img" aria-label="Target = F(Source) — CocoIndex's mental model. The engine auto-syncs only the Δ: first a data change drives one target row, then a code change re-runs multiple rows.">
+  <defs>
+    <marker id="r4d-ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#532638" opacity="0.55"/>
+    </marker>
+    <marker id="r4d-ah-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#BE5133"/>
+    </marker>
+    <style>
+      /*  Two-phase 14-second loop, gentle:
+          0.0–4.0s  DATA CHANGE  : b.md flashes → arrow s→F pulses → row 2 glows
+          4.5–6.0s  rest
+          6.0–11.0s CODE CHANGE  : F box ring glows + strips type → arrow F→T pulses → rows 2+3 glow
+          11.5–14s  rest, then loop
+      */
+
+      /* phase tag: which scenario is currently running */
+      .tag-data,
+      .tag-code { opacity: 0; }
+      .tag-data { animation: tagData 14s ease-in-out infinite; }
+      .tag-code { animation: tagCode 14s ease-in-out infinite; }
+      @keyframes tagData { 0%, 1%, 32%, 100% { opacity: 0 } 4%, 30% { opacity: 1 } }
+      @keyframes tagCode { 0%, 42%, 82%, 100% { opacity: 0 } 45%, 80% { opacity: 1 } }
+
+      /* DATA-CHANGE phase */
+      .src-bmd-flash    { animation: bmd 14s ease-in-out infinite; opacity: 0; }
+      .arr-s2f-coral    { animation: arrSF 14s ease-in-out infinite; opacity: 0; }
+      .delta-bmd        { animation: bmd 14s ease-in-out infinite; opacity: 0; }
+      .arr-f2t-data     { animation: arrFTd 14s ease-in-out infinite; opacity: 0; }
+      .row2-data        { animation: row2d 14s ease-in-out infinite; opacity: 0; }
+      @keyframes bmd     { 0%, 1%, 32%, 100% { opacity: 0 } 5%, 28% { opacity: 1 } }
+      @keyframes arrSF   { 0%, 7%, 32%, 100% { opacity: 0 } 12%, 28% { opacity: 1 } }
+      @keyframes arrFTd  { 0%, 17%, 32%, 100% { opacity: 0 } 22%, 30% { opacity: 1 } }
+      @keyframes row2d   { 0%, 22%, 36%, 100% { opacity: 0 } 25%, 33% { opacity: 1 } }
+
+      /* CODE-CHANGE phase */
+      .f-ring         { animation: ring 14s ease-in-out infinite; opacity: 0; }
+      .strip          { animation-iteration-count: infinite; animation-duration: 14s; animation-timing-function: ease-in-out; opacity: 0; }
+      .strip1         { animation-name: s1; }
+      .strip2         { animation-name: s2; }
+      .strip3         { animation-name: s3; }
+      .cursor-code    { animation: curC 14s steps(2,end) infinite; opacity: 0; }
+      .arr-f2t-code   { animation: arrFTc 14s ease-in-out infinite; opacity: 0; }
+      .row2-code      { animation: row2c 14s ease-in-out infinite; opacity: 0; }
+      .row3-code      { animation: row3c 14s ease-in-out infinite; opacity: 0; }
+      @keyframes ring  { 0%, 42%, 82%, 100% { opacity: 0 } 47%, 80% { opacity: 1 } }
+      @keyframes s1    { 0%, 47%, 82%, 100% { opacity: 0 } 51%, 80% { opacity: 0.85 } }
+      @keyframes s2    { 0%, 53%, 82%, 100% { opacity: 0 } 57%, 80% { opacity: 0.7  } }
+      @keyframes s3    { 0%, 59%, 82%, 100% { opacity: 0 } 63%, 80% { opacity: 0.55 } }
+      @keyframes curC  { 0%, 50% { opacity: 0 } 53%, 56%, 60%, 64%, 68% { opacity: 1 } 58%, 62%, 66%, 70% { opacity: 0 } 75% { opacity: 0 } }
+      @keyframes arrFTc{ 0%, 65%, 82%, 100% { opacity: 0 } 70%, 80% { opacity: 1 } }
+      @keyframes row2c { 0%, 70%, 82%, 100% { opacity: 0 } 73%, 80% { opacity: 1 } }
+      @keyframes row3c { 0%, 70%, 82%, 100% { opacity: 0 } 73%, 80% { opacity: 1 } }
+    </style>
+  </defs>
+
+  <!-- ===== BIG BRIGHT FORMULA — Target = F(Source) ===== -->
+  <g font-family="Inter, -apple-system, system-ui, sans-serif" font-weight="800" letter-spacing="-1">
+    <text text-anchor="middle" x="320" y="54" font-size="46">
+      <tspan fill="#FF8FA3">Target</tspan>
+      <tspan fill="rgba(252,243,216,0.6)" font-weight="400"> = </tspan>
+      <tspan fill="#FFD94A" font-style="italic">F</tspan>
+      <tspan fill="rgba(252,243,216,0.6)" font-weight="400">(</tspan>
+      <tspan fill="#3DEE7E">Source</tspan>
+      <tspan fill="rgba(252,243,216,0.6)" font-weight="400">)</tspan>
+    </text>
+  </g>
+  <text x="320" y="78" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" letter-spacing="0.2em" fill="rgba(252,243,216,0.55)">THE MENTAL MODEL</text>
+
+  <!-- phase tag (top-center, above the target box) -->
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.18em">
+    <text class="tag-data" x="320" y="92" text-anchor="middle" fill="#FF6B5A" font-weight="700">▸ DATA CHANGE</text>
+    <text class="tag-code" x="320" y="92" text-anchor="middle" fill="#FF6B5A" font-weight="700">▸ CODE CHANGE</text>
+  </g>
+
+  <!-- ============ TARGET (left) ============ -->
+  <rect x="40" y="98" width="180" height="108" rx="10" fill="rgba(252,243,216,0.55)" stroke="#532638" stroke-opacity="0.3"/>
+  <text x="58" y="120" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#532638" fill-opacity="0.6" letter-spacing="0.14em">TARGET</text>
+  <rect x="58" y="130" width="144" height="12" rx="2" fill="rgba(83,38,56,0.12)"/>
+  <rect x="58" y="146" width="144" height="12" rx="2" fill="rgba(83,38,56,0.12)"/>
+  <rect x="58" y="162" width="144" height="12" rx="2" fill="rgba(83,38,56,0.12)"/>
+  <rect x="58" y="178" width="144" height="12" rx="2" fill="rgba(83,38,56,0.12)"/>
+  <!-- row 2 glow overlays (data + code) -->
+  <rect class="row2-data" x="58" y="146" width="144" height="12" rx="2" fill="#BE5133"/>
+  <rect class="row2-code" x="58" y="146" width="144" height="12" rx="2" fill="#BE5133"/>
+  <!-- row 3 glow (code only) -->
+  <rect class="row3-code" x="58" y="162" width="144" height="12" rx="2" fill="#BE5133"/>
+
+  <!-- ============ F · YOUR CODE (center, dark) ============ -->
+  <rect x="240" y="98" width="160" height="108" rx="10" fill="#2A121B"/>
+  <!-- code-change ring overlay -->
+  <rect class="f-ring" x="238" y="96" width="164" height="112" rx="11" fill="none" stroke="#BE5133" stroke-width="2"/>
+  <text x="320" y="128" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="rgba(252,243,216,0.55)" letter-spacing="0.14em">F · YOUR CODE</text>
+  <text x="272" y="152" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12" fill="#FCF3D8"><tspan fill="#E59A63">@coco.fn</tspan></text>
+  <text x="272" y="172" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12" fill="#FCF3D8"><tspan fill="#FB6A76">process</tspan>(src)</text>
+  <rect class="strip strip1" x="272" y="180" width="38" height="2.5" rx="1" fill="#FCF3D8"/>
+  <rect class="strip strip2" x="272" y="186" width="56" height="2.5" rx="1" fill="#FCF3D8"/>
+  <rect class="strip strip3" x="272" y="192" width="28" height="2.5" rx="1" fill="#FCF3D8"/>
+  <rect class="cursor-code" x="302" y="190" width="1.6" height="8" fill="#27E62B"/>
+
+  <!-- ============ SOURCE (right) ============ -->
+  <rect x="420" y="98" width="180" height="108" rx="10" fill="rgba(252,243,216,0.55)" stroke="#532638" stroke-opacity="0.3"/>
+  <text x="438" y="120" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#532638" fill-opacity="0.6" letter-spacing="0.14em">SOURCE</text>
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#2A121B">
+    <rect x="438" y="130" width="66" height="16" rx="2" fill="#E59A63" opacity="0.55"/>
+    <text x="444" y="142">a.py</text>
+    <rect x="512" y="130" width="76" height="16" rx="2" fill="#E59A63" opacity="0.55"/>
+    <text x="518" y="142">b.md</text>
+    <rect x="438" y="150" width="66" height="16" rx="2" fill="#E59A63" opacity="0.55"/>
+    <text x="444" y="162">c.pdf</text>
+    <rect x="512" y="150" width="76" height="16" rx="2" fill="#E59A63" opacity="0.55"/>
+    <text x="518" y="162">d.ts</text>
+  </g>
+  <!-- b.md flash overlay (data change) -->
+  <rect class="src-bmd-flash" x="512" y="130" width="76" height="16" rx="2" fill="#BE5133"/>
+  <text class="delta-bmd" x="544" y="142" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" font-weight="700" fill="#FCF3D8">b.md  Δ</text>
+
+  <!-- ============ Arrows ============ -->
+  <!-- baseline arrows (always visible, soft ink) -->
+  <path d="M418 152 L 402 152" stroke="#532638" stroke-opacity="0.55" stroke-width="1.4" marker-end="url(#r4d-ah-ink)"/>
+  <path d="M238 152 L 222 152" stroke="#532638" stroke-opacity="0.55" stroke-width="1.4" marker-end="url(#r4d-ah-ink)"/>
+  <!-- coral pulse overlays -->
+  <path class="arr-s2f-coral"  d="M418 152 L 402 152" stroke="#BE5133" stroke-width="1.8" marker-end="url(#r4d-ah-coral)"/>
+  <path class="arr-f2t-data"   d="M238 152 L 222 152" stroke="#BE5133" stroke-width="1.8" marker-end="url(#r4d-ah-coral)"/>
+  <path class="arr-f2t-code"   d="M238 152 L 222 152" stroke="#BE5133" stroke-width="1.8" marker-end="url(#r4d-ah-coral)"/>
+</svg>

@@ -1,0 +1,311 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="30 240 1540 570" role="img" aria-label="Any data in, any data out — sources flow into a symbolic DAG of transforms, then out to targets">
+  <defs>
+    <pattern id="hw-dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="1.4" fill="#532638" opacity="0.10"/>
+    </pattern>
+    <marker id="hw-ah-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#532638" opacity="0.35"/>
+    </marker>
+    <marker id="hw-ah-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#BE5133"/>
+    </marker>
+  </defs>
+
+  <text x="800" y="294" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="18" font-weight="600" letter-spacing="-0.3" fill="#2A121B" text-anchor="middle">
+    Python Native <tspan fill="#BE5133">Transformation</tspan>
+  </text>
+
+  <!-- ===== SOURCES (left column) ===== -->
+  <g fill="#2A121B">
+    <g>
+      <rect x="72" y="260" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="72" y="260" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(92,278)" stroke-width="1.6" fill="none" stroke-linecap="round">
+        <path d="M6 4l-4 6 4 6M14 4l4 6-4 6" stroke="#532638"/>
+        <path d="M12 2l-4 16" stroke="#BE5133"/>
+      </g>
+      <text x="124" y="291" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="14" font-weight="500">Codebases</text>
+      <line x1="258" y1="272" x2="258" y2="300" stroke="#2A121B" stroke-opacity="0.10"/>
+      <g transform="translate(278,278)" stroke-width="1.6" fill="none">
+        <rect x="2" y="2" width="16" height="16" rx="1.5" stroke="#532638"/>
+        <path d="M5 6h10M5 10h10" stroke="#532638"/>
+        <path d="M5 14h6" stroke="#BE5133"/>
+      </g>
+      <text x="310" y="291" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="14" font-weight="500">Meeting Notes</text>
+    </g>
+
+    <g>
+      <rect x="72" y="332" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="72" y="332" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(92,350)" stroke-width="1.6" fill="none">
+        <circle cx="10" cy="10" r="8" stroke="#532638"/>
+        <path d="M2 10h16M10 2c3 3 3 13 0 16M10 2c-3 3-3 13 0 16" stroke="#532638"/>
+        <circle cx="14" cy="6" r="1.4" fill="#BE5133" stroke="none"/>
+      </g>
+      <text x="124" y="363" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="15" font-weight="500">Web · APIs</text>
+    </g>
+
+    <g>
+      <rect x="72" y="404" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="72" y="404" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(92,422)" stroke-width="1.6" fill="none">
+        <path d="M1 4a2 2 0 012-2h4l1.6 1.6H17a2 2 0 012 2v9a2 2 0 01-2 2H3a2 2 0 01-2-2V4z" stroke="#532638"/>
+        <circle cx="3" cy="11" r="1.4" fill="#BE5133" stroke="none"/>
+      </g>
+      <text x="124" y="435" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="15" font-weight="500">File System · Blob Stores</text>
+    </g>
+
+    <g>
+      <rect x="72" y="476" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="72" y="476" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(92,494)" stroke-width="1.6" fill="none">
+        <ellipse cx="10" cy="2" rx="8" ry="2.2" stroke="#BE5133"/>
+        <path d="M2 2v12c0 1.2 3.6 2.2 8 2.2s8-1 8-2.2V2" stroke="#532638"/>
+        <path d="M2 8c0 1.2 3.6 2.2 8 2.2s8-1 8-2.2" stroke="#532638"/>
+        <ellipse cx="10" cy="2" rx="7.4" ry="1.3" fill="none" stroke="#E59A63" stroke-width="1.4"/>
+      </g>
+      <text x="124" y="507" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="15" font-weight="500">Databases</text>
+    </g>
+
+    <g>
+      <rect x="72" y="548" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="72" y="548" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(92,566)" stroke-width="1.6" fill="none">
+        <rect x="1" y="4" width="18" height="10" rx="2" stroke="#532638"/>
+        <g stroke-width="0" stroke="none">
+          <rect x="3" y="7" width="2.5" height="4" rx="0.6" fill="#532638"/>
+          <rect x="7" y="7" width="2.5" height="4" rx="0.6" fill="#532638"/>
+          <rect x="11" y="7" width="2.5" height="4" rx="0.6" fill="#532638"/>
+          <rect x="15" y="7" width="2.5" height="4" rx="0.6" fill="#BE5133"/>
+        </g>
+      </g>
+      <text x="124" y="579" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="15" font-weight="500">Message Queues</text>
+    </g>
+
+    <g>
+      <rect x="72" y="620" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="72" y="620" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(92,638)" stroke-width="1.6" fill="none">
+        <rect x="1" y="3" width="18" height="13" rx="1.5" stroke="#532638"/>
+        <circle cx="6" cy="8" r="1.5" fill="#BE5133" stroke="none"/>
+        <path d="M19 14l-5-5-7 7" stroke="#532638"/>
+      </g>
+      <text x="124" y="651" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="14" font-weight="500">Images · Video</text>
+      <line x1="258" y1="632" x2="258" y2="660" stroke="#2A121B" stroke-opacity="0.10"/>
+      <g transform="translate(278,638)" stroke-width="1.6" fill="none" stroke-linecap="round">
+        <line x1="2" y1="9" x2="2" y2="11" stroke="#532638"/>
+        <line x1="6" y1="6" x2="6" y2="14" stroke="#532638"/>
+        <line x1="10" y1="2" x2="10" y2="16" stroke="#BE5133"/>
+        <line x1="14" y1="6" x2="14" y2="14" stroke="#532638"/>
+        <line x1="18" y1="9" x2="18" y2="11" stroke="#532638"/>
+      </g>
+      <text x="310" y="651" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="14" font-weight="500">Voice · Transcripts</text>
+    </g>
+  </g>
+
+  <!-- ===== TARGETS (right column) ===== -->
+  <g font-family="Inter, -apple-system, system-ui, sans-serif" font-size="15" font-weight="500" fill="#2A121B">
+    <g>
+      <rect x="1156" y="260" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="1156" y="260" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(1176,278)" stroke-width="1.6" fill="none">
+        <ellipse cx="10" cy="2" rx="8" ry="2.2" stroke="#BE5133"/>
+        <path d="M2 2v12c0 1.2 3.6 2.2 8 2.2s8-1 8-2.2V2" stroke="#532638"/>
+        <path d="M2 8c0 1.2 3.6 2.2 8 2.2s8-1 8-2.2" stroke="#532638"/>
+        <ellipse cx="10" cy="2" rx="7.4" ry="1.3" fill="none" stroke="#E59A63" stroke-width="1.4"/>
+      </g>
+      <text x="1208" y="291">Relational DB</text>
+    </g>
+    <g>
+      <rect x="1156" y="332" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="1156" y="332" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(1176,350)" stroke-width="1.6" fill="none">
+        <rect x="1" y="1" width="18" height="7" rx="1" stroke="#532638"/>
+        <rect x="1" y="12" width="18" height="7" rx="1" stroke="#532638"/>
+        <circle cx="4.5" cy="4.5" r="0.8" fill="#BE5133" stroke="none"/>
+        <circle cx="4.5" cy="15.5" r="0.8" fill="#532638" stroke="none"/>
+      </g>
+      <text x="1208" y="363">Data Warehouse</text>
+    </g>
+    <g>
+      <rect x="1156" y="404" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="1156" y="404" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(1176,422)" stroke-width="1.6" fill="none">
+        <circle cx="10" cy="10" r="3" stroke="#BE5133" fill="#BE5133"/>
+        <circle cx="2.5" cy="3" r="1.8" stroke="#532638"/>
+        <circle cx="17.5" cy="3" r="1.8" stroke="#532638"/>
+        <circle cx="2.5" cy="17" r="1.8" stroke="#532638"/>
+        <circle cx="17.5" cy="17" r="1.8" stroke="#532638"/>
+        <path d="M4 4l4 4M16 4l-4 4M4 16l4-4M16 16l-4-4" stroke="#532638"/>
+      </g>
+      <text x="1208" y="435">Vector DB</text>
+    </g>
+    <g>
+      <rect x="1156" y="476" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="1156" y="476" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(1176,494)" stroke-width="1.6" fill="none">
+        <circle cx="3.5" cy="3.5" r="2.2" stroke="#532638"/>
+        <circle cx="16.5" cy="3.5" r="2.2" stroke="#532638"/>
+        <circle cx="10" cy="16.5" r="2.2" stroke="#BE5133" fill="#BE5133"/>
+        <path d="M6 4h8M5 6l4 8M15 6l-4 8" stroke="#532638"/>
+      </g>
+      <text x="1208" y="507">Graph DB</text>
+    </g>
+    <g>
+      <rect x="1156" y="548" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="1156" y="548" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(1176,566)" stroke-width="1.6" fill="none">
+        <rect x="1" y="4" width="18" height="10" rx="2" stroke="#532638"/>
+        <g stroke-width="0" stroke="none">
+          <rect x="3" y="7" width="2.5" height="4" rx="0.6" fill="#532638"/>
+          <rect x="7" y="7" width="2.5" height="4" rx="0.6" fill="#532638"/>
+          <rect x="11" y="7" width="2.5" height="4" rx="0.6" fill="#532638"/>
+          <rect x="15" y="7" width="2.5" height="4" rx="0.6" fill="#BE5133"/>
+        </g>
+      </g>
+      <text x="1208" y="579">Message Queue</text>
+    </g>
+    <g>
+      <rect x="1156" y="620" width="372" height="52" rx="6" fill="#FBF6E8" stroke="#2A121B" stroke-opacity="0.14"/>
+      <rect x="1156" y="620" width="372" height="52" rx="6" fill="url(#hw-dots)" pointer-events="none"/>
+      <g transform="translate(1176,638)" stroke-width="1.6" fill="none">
+        <path d="M2 16V6l8-4 8 4v10z" stroke="#532638"/>
+        <path d="M6 16v-6h8v6" stroke="#BE5133"/>
+      </g>
+      <text x="1208" y="651">Feature Store</text>
+    </g>
+  </g>
+
+  <!-- ===== flow lines into the engine ===== -->
+  <g fill="none" stroke="#532638" stroke-width="1.2" stroke-opacity="0.32" marker-end="url(#hw-ah-soft)">
+    <path d="M444,286 C476,286 476,466 508,466"/>
+    <path d="M444,358 C476,358 476,466 508,466"/>
+    <path d="M444,430 C476,430 476,466 508,466"/>
+    <path d="M444,502 C476,502 476,466 508,466"/>
+    <path d="M444,574 C476,574 476,466 508,466"/>
+    <path d="M444,646 C476,646 476,466 508,466"/>
+  </g>
+  <g fill="none" stroke="#532638" stroke-width="1.2" stroke-opacity="0.32" marker-end="url(#hw-ah-soft)">
+    <path d="M1092,466 C1124,466 1124,286 1156,286"/>
+    <path d="M1092,466 C1124,466 1124,358 1156,358"/>
+    <path d="M1092,466 C1124,466 1124,430 1156,430"/>
+    <path d="M1092,466 C1124,466 1124,502 1156,502"/>
+    <path d="M1092,466 C1124,466 1124,574 1156,574"/>
+    <path d="M1092,466 C1124,466 1124,646 1156,646"/>
+  </g>
+
+  <!-- ===== center engine: top lane (cache hit) ===== -->
+  <g>
+    <rect x="674" y="320" width="380" height="180" rx="12" fill="rgba(83,38,56,0.04)" stroke="rgba(83,38,56,0.22)" stroke-width="1"/>
+    <path d="M684,320 L684,340 L690,335 L696,340 L696,320 Z" fill="#E59A63"/>
+    <g transform="translate(1038, 336)">
+      <circle r="8" fill="#27E62B" opacity="0.85"/>
+      <path d="M-3.5 0 L-1 2.5 L3.5 -2.5" stroke="#2A121B" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <g>
+      <g transform="translate(540, 394)">
+        <rect x="0" y="0" width="34" height="32" rx="3" fill="#532638" opacity="0.92"/>
+        <path d="M5 0 L5 11 L9 8 L13 11 L13 0 Z" fill="#E59A63"/>
+      </g>
+      <text x="557" y="444" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.04em" fill="#E59A63">FileLike</text>
+    </g>
+
+    <g>
+      <ellipse cx="624" cy="410" rx="30" ry="22" fill="#E59A63" opacity="0.95"/>
+      <text x="624" y="452" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.04em" fill="#E59A63">split() → chunks</text>
+    </g>
+
+    <line x1="578" y1="410" x2="590" y2="410" stroke="#532638" stroke-opacity="0.45" stroke-width="1.1" marker-end="url(#hw-ah-soft)"/>
+
+    <g>
+      <rect x="694" y="366" width="36" height="28" rx="4" fill="#532638" opacity="0.92"/>
+      <ellipse cx="790" cy="380" rx="34" ry="16" fill="#532638" opacity="0.92"/>
+      <path d="M762,370 L762,379 L766,376 L770,379 L770,370 Z" fill="#E59A63"/>
+      <path d="M855 366 L911 366 A 14 14 0 0 1 911 394 L 855 394 Z" fill="#532638" opacity="0.92"/>
+      <circle cx="712" cy="380" r="4.5" fill="#E59A63"/>
+      <text x="864" y="355" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.04em" fill="#E59A63">embed(chunk) → vec</text>
+    </g>
+
+    <g>
+      <rect x="694" y="426" width="36" height="28" rx="4" fill="#532638" opacity="0.92"/>
+      <ellipse cx="790" cy="440" rx="34" ry="16" fill="#532638" opacity="0.92"/>
+      <path d="M762,430 L762,439 L766,436 L770,439 L770,430 Z" fill="#E59A63"/>
+      <path d="M855 426 L911 426 A 14 14 0 0 1 911 454 L 855 454 Z" fill="#532638" opacity="0.92"/>
+      <circle cx="712" cy="440" r="4.5" fill="#E59A63"/>
+      <text x="864" y="415" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.04em" fill="#E59A63">embed(chunk) → vec</text>
+    </g>
+
+    <g fill="none" stroke="#532638" stroke-opacity="0.45" stroke-width="1.1" stroke-linecap="round" marker-end="url(#hw-ah-soft)">
+      <path d="M652,400 C668,392 680,382 694,380"/>
+      <path d="M652,420 C668,428 680,438 694,440"/>
+      <line x1="730" y1="380" x2="754" y2="380"/>
+      <line x1="824" y1="380" x2="853" y2="380"/>
+      <line x1="730" y1="440" x2="754" y2="440"/>
+      <line x1="824" y1="440" x2="853" y2="440"/>
+      <line x1="925" y1="380" x2="1050" y2="380" stroke-dasharray="2 5"/>
+      <line x1="925" y1="440" x2="1050" y2="440" stroke-dasharray="2 5"/>
+    </g>
+
+    <!-- bottom lane: delta detected, re-embed -->
+    <rect x="674" y="540" width="380" height="180" rx="12" fill="rgba(83,38,56,0.04)" stroke="rgba(83,38,56,0.22)" stroke-width="1"/>
+    <path d="M684,540 L684,560 L690,555 L696,560 L696,540 Z" fill="#E59A63"/>
+    <g transform="translate(1038, 556)" stroke="#E59A63" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M 5 0 A 5 5 0 1 1 3.5 -3.5"/>
+      <polyline points="5,-3 5,0 2,0"/>
+    </g>
+
+    <g>
+      <g transform="translate(540, 614)">
+        <rect x="0" y="0" width="34" height="32" rx="3" fill="#E59A63" opacity="0.95"/>
+        <path d="M5 0 L5 11 L9 8 L13 11 L13 0 Z" fill="#532638"/>
+      </g>
+      <text x="557" y="664" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.04em" fill="#E59A63">FileLike (Δ)</text>
+    </g>
+
+    <g>
+      <ellipse cx="624" cy="630" rx="30" ry="22" fill="#532638" opacity="0.12" stroke="#532638" stroke-opacity="0.55" stroke-width="1.2"/>
+      <text x="624" y="672" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.04em" fill="#532638">split() re-runs</text>
+    </g>
+
+    <line x1="578" y1="630" x2="590" y2="630" stroke="#532638" stroke-opacity="0.45" stroke-width="1.1" marker-end="url(#hw-ah-soft)"/>
+
+    <g>
+      <rect x="694" y="586" width="36" height="28" rx="4" fill="#532638" opacity="0.92"/>
+      <ellipse cx="790" cy="600" rx="34" ry="16" fill="#532638" opacity="0.92"/>
+      <path d="M762,590 L762,599 L766,596 L770,599 L770,590 Z" fill="#E59A63"/>
+      <g transform="translate(818, 600)">
+        <circle r="6" fill="#27E62B" opacity="0.9"/>
+        <path d="M-2.7 0 L-0.8 1.8 L2.7 -1.7" stroke="#2A121B" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <path d="M855 586 L911 586 A 14 14 0 0 1 911 614 L 855 614 Z" fill="#532638" opacity="0.92"/>
+      <circle cx="712" cy="600" r="4.5" fill="#27E62B"/>
+      <text x="864" y="575" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.04em" fill="#27E62B">cache hit · no re-run</text>
+    </g>
+
+    <g>
+      <rect x="694" y="646" width="36" height="28" rx="4" fill="#E59A63" opacity="0.95"/>
+      <circle cx="712" cy="660" r="4.5" fill="#E59A63"/>
+      <text x="864" y="635" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" letter-spacing="0.04em" fill="#E59A63">Δ → re-embed</text>
+      <ellipse cx="790" cy="660" rx="34" ry="16" fill="#532638" opacity="0.92"/>
+      <path d="M762,650 L762,659 L766,656 L770,659 L770,650 Z" fill="#E59A63"/>
+      <g transform="translate(818, 660)" stroke="#E59A63" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <circle r="6" fill="#FCF3D8" opacity="0.95" stroke="none"/>
+        <path d="M 3.5 0 A 3.5 3.5 0 1 1 2.5 -2.5"/>
+        <polyline points="3.5,-2 3.5,0 1.5,0"/>
+      </g>
+      <path d="M855 646 L911 646 A 14 14 0 0 1 911 674 L 855 674 Z" fill="#E59A63" opacity="0.95"/>
+    </g>
+
+    <g fill="none" stroke="#532638" stroke-opacity="0.45" stroke-width="1.1" stroke-linecap="round" marker-end="url(#hw-ah-soft)">
+      <path d="M652,620 C668,612 680,602 694,600"/>
+      <path d="M652,640 C668,648 680,658 694,660"/>
+      <line x1="730" y1="600" x2="754" y2="600"/>
+      <line x1="824" y1="600" x2="853" y2="600"/>
+      <line x1="730" y1="660" x2="754" y2="660"/>
+      <line x1="824" y1="660" x2="853" y2="660"/>
+      <line x1="925" y1="600" x2="1050" y2="600" stroke-dasharray="2 5"/>
+      <line x1="925" y1="660" x2="1050" y2="660" stroke-dasharray="2 5"/>
+    </g>
+  </g>
+</svg>

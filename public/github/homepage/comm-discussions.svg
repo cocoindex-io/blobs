@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 100" role="img" aria-label="Discussions">
+  <title>Discussions</title>
+  <desc>Join CocoIndex GitHub Discussions — design docs, RFCs, and Q&amp;A.</desc>
+
+  <!-- two overlapping chat bubbles -->
+  <g transform="translate(10, 22)">
+    <path d="M4 10 a8 8 0 018-8h30a8 8 0 018 8v18a8 8 0 01-8 8h-14l-8 8v-8h-8a8 8 0 01-8-8z" fill="#3DEE7E"/>
+    <path d="M24 30 a8 8 0 018-8h26a8 8 0 018 8v14a8 8 0 01-8 8h-6l-6 6v-6h-14a8 8 0 01-8-8z" fill="none" stroke="#3DEE7E" stroke-width="3.4"/>
+  </g>
+
+  <text x="110" y="64"
+        font-family="Inter, -apple-system, system-ui, sans-serif"
+        font-size="34" font-weight="700" letter-spacing="-0.5" fill="#3DEE7E">
+    Discussions
+  </text>
+</svg>

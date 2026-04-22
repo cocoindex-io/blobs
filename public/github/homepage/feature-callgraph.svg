@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Call graphs and blast radius — what a change touches before it ships">
+  <defs>
+    <style>
+      .ring { animation: ring 2.4s ease-out infinite; transform-origin: 100px 100px; }
+      @keyframes ring {
+        0%   { transform: scale(0.5); opacity: 0.9; }
+        100% { transform: scale(1.7); opacity: 0; }
+      }
+    </style>
+  </defs>
+  <rect width="200" height="200" rx="14" fill="#FCF3D8"/>
+  <text x="100" y="32" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="13" font-weight="700" fill="#2A121B">Call graphs &amp; blast radius</text>
+
+  <g transform="translate(0, 8)">
+    <!-- expanding rings = blast radius -->
+    <circle class="ring" cx="100" cy="100" r="22" fill="none" stroke="#BE5133" stroke-width="1.8"/>
+    <circle cx="100" cy="100" r="58" fill="none" stroke="#BE5133" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="3 4"/>
+    <circle cx="100" cy="100" r="40" fill="none" stroke="#BE5133" stroke-opacity="0.32" stroke-width="1"/>
+
+    <!-- callers -->
+    <g stroke="#532638" stroke-opacity="0.5" stroke-width="1.2" fill="none">
+      <line x1="100" y1="100" x2="40"  y2="50"/>
+      <line x1="100" y1="100" x2="160" y2="44"/>
+      <line x1="100" y1="100" x2="32"  y2="138"/>
+      <line x1="100" y1="100" x2="172" y2="142"/>
+      <line x1="100" y1="100" x2="100" y2="170"/>
+    </g>
+    <g fill="#532638">
+      <circle cx="40"  cy="50"  r="4"/>
+      <circle cx="160" cy="44"  r="4"/>
+      <circle cx="32"  cy="138" r="4"/>
+      <circle cx="172" cy="142" r="4"/>
+      <circle cx="100" cy="170" r="4"/>
+    </g>
+    <circle cx="100" cy="100" r="7" fill="#BE5133"/>
+  </g>
+</svg>

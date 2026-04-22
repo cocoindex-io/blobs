@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 36" role="img" aria-label="CocoIndex documentation — quickstart, connectors, ops, transformations, target stores, RAG and knowledge graph recipes">
+  <title>CocoIndex Documentation</title>
+  <desc>Read the CocoIndex documentation — guides, quickstart, connectors, transformations, target stores, and the full API reference for Python and Rust.</desc>
+
+  <!-- shared pill (same fill/stroke/radius as cocoindex + discord chips) -->
+  <rect x="0.5" y="0.5" width="91" height="35" rx="17.5" fill="rgba(252,243,216,0.08)" stroke="rgba(252,243,216,0.24)" stroke-width="1"/>
+
+  <!-- open-book icon · 22×18, centered vertically at y=18 → y offset 9 -->
+  <g transform="translate(12, 9)">
+    <!-- left page -->
+    <path d="M1 2 L 10 3 L 10 17 L 1 16 Z" fill="#F5B07F"/>
+    <!-- right page -->
+    <path d="M21 2 L 12 3 L 12 17 L 21 16 Z" fill="#F5B07F"/>
+    <!-- center spine -->
+    <rect x="10" y="3" width="2" height="14" fill="#E59A63"/>
+    <!-- text lines (on peach pages, dark) -->
+    <g stroke="#2A121B" stroke-width="0.9" stroke-linecap="round" opacity="0.45">
+      <line x1="3"  y1="6"  x2="8"  y2="6.4"/>
+      <line x1="3"  y1="9"  x2="8"  y2="9.4"/>
+      <line x1="3"  y1="12" x2="7"  y2="12.3"/>
+      <line x1="14" y1="6.4" x2="19" y2="6"/>
+      <line x1="14" y1="9.4" x2="19" y2="9"/>
+      <line x1="14" y1="12.3" x2="18" y2="12"/>
+    </g>
+  </g>
+
+  <!-- wordmark: same font as cocoindex + discord -->
+  <text x="42" y="18" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="14" font-weight="700" letter-spacing="-0.2" fill="#F5B07F" dominant-baseline="central">Docs</text>
+</svg>

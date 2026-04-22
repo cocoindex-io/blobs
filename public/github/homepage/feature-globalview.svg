@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Global view — spot duplicates across the whole repo">
+  <defs>
+    <style>
+      .dup { animation: dup 2.4s ease-in-out infinite; }
+      @keyframes dup { 0%,100% { opacity: 0.55 } 50% { opacity: 1 } }
+      .link { animation: link 2.4s linear infinite; stroke-dasharray: 3 3; }
+      @keyframes link { from { stroke-dashoffset: 0 } to { stroke-dashoffset: -12 } }
+    </style>
+  </defs>
+  <rect width="200" height="200" rx="14" fill="#FCF3D8"/>
+  <text x="100" y="32" text-anchor="middle" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="13" font-weight="700" fill="#2A121B">Global view</text>
+
+  <!-- module grid -->
+  <g transform="translate(28, 56)" fill="rgba(83,38,56,0.06)" stroke="#532638" stroke-opacity="0.32" stroke-width="0.9">
+    <rect x="0"  y="0"  width="28" height="28" rx="3"/>
+    <rect x="36" y="0"  width="28" height="28" rx="3"/>
+    <rect x="72" y="0"  width="28" height="28" rx="3"/>
+    <rect x="108" y="0" width="28" height="28" rx="3"/>
+
+    <rect x="0"  y="36" width="28" height="28" rx="3"/>
+    <rect x="72" y="36" width="28" height="28" rx="3"/>
+    <rect x="108" y="36" width="28" height="28" rx="3"/>
+
+    <rect x="0"  y="72" width="28" height="28" rx="3"/>
+    <rect x="36" y="72" width="28" height="28" rx="3"/>
+    <rect x="72" y="72" width="28" height="28" rx="3"/>
+
+    <rect x="0"  y="108" width="28" height="28" rx="3"/>
+    <rect x="72" y="108" width="28" height="28" rx="3"/>
+    <rect x="108" y="108" width="28" height="28" rx="3"/>
+  </g>
+
+  <!-- highlighted duplicates -->
+  <g transform="translate(28, 56)">
+    <rect class="dup" x="36" y="36" width="28" height="28" rx="3" fill="rgba(190,81,51,0.32)" stroke="#BE5133" stroke-width="1.6"/>
+    <rect class="dup" x="108" y="72" width="28" height="28" rx="3" fill="rgba(190,81,51,0.32)" stroke="#BE5133" stroke-width="1.6" style="animation-delay:0.4s"/>
+    <rect class="dup" x="36" y="108" width="28" height="28" rx="3" fill="rgba(190,81,51,0.32)" stroke="#BE5133" stroke-width="1.6" style="animation-delay:0.8s"/>
+
+    <g fill="none" stroke="#BE5133" stroke-width="1.2" stroke-opacity="0.85">
+      <path class="link" d="M 64 50 Q 90 50 108 86"/>
+      <path class="link" d="M 50 64 L 50 108"/>
+    </g>
+  </g>
+</svg>

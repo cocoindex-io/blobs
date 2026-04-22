@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 38 440 332" role="img" aria-label="Codebase indexed: src/ files panel, call graph, hierarchy, vectors, symbols">
+  <defs>
+    <marker id="hv-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#BE5133"/>
+    </marker>
+    <marker id="hv-ah-s" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#532638" fill-opacity="0.55"/>
+    </marker>
+    <style>
+      /* slow file-edit pulse on the flagged source files */
+      .pulse {
+        animation: p 2.4s ease-in-out infinite;
+        transform-origin: center;
+        transform-box: fill-box;
+      }
+      @keyframes p {
+        0%, 100% { opacity: 1;   transform: scale(1); }
+        50%      { opacity: 0.35; transform: scale(1.4); }
+      }
+      /* wave-ripple across the vector grid (homepage twinkle, slowed) */
+      .wave {
+        animation: wave 3.6s ease-in-out infinite;
+      }
+      @keyframes wave {
+        0%, 100% { opacity: 0.35; r: 1.6; }
+        50%      { opacity: 1;    r: 2.4; }
+      }
+      /* the freshly emerged vector — peach with a longer breath */
+      .emerge {
+        animation: emerge 4.8s ease-in-out infinite;
+        transform-origin: center;
+        transform-box: fill-box;
+      }
+      @keyframes emerge {
+        0%, 100% { opacity: 0.6; transform: scale(0.85); }
+        50%      { opacity: 1;   transform: scale(1.25); }
+      }
+    </style>
+  </defs>
+
+  <rect width="440" height="380" fill="#FCF3D8" rx="12"/>
+
+  <!-- src files -->
+  <g>
+    <rect x="16" y="50" width="140" height="250" rx="8" fill="rgba(252,243,216,0.6)" stroke="#532638" stroke-opacity="0.22" stroke-width="1"/>
+    <text x="28" y="74" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" fill="rgba(42,18,27,0.58)" letter-spacing="0.14em">SRC/</text>
+    <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="#2A121B">
+      <line x1="34" y1="94" x2="34" y2="276" stroke="#532638" stroke-opacity="0.35" stroke-width="1"/>
+      <line x1="34" y1="106" x2="46" y2="106" stroke="#532638" stroke-opacity="0.35" stroke-width="1"/>
+      <rect x="48" y="95" width="10" height="10" rx="1.5" fill="none" stroke="#532638" stroke-width="1"/>
+      <text x="64" y="105">page.tsx</text>
+      <circle class="pulse" cx="142" cy="100" r="3.5" fill="#BE5133"/>
+
+      <line x1="34" y1="136" x2="46" y2="136" stroke="#532638" stroke-opacity="0.35" stroke-width="1"/>
+      <rect x="48" y="125" width="10" height="10" rx="1.5" fill="none" stroke="#532638" stroke-width="1"/>
+      <text x="64" y="135">layout.tsx</text>
+
+      <line x1="34" y1="166" x2="46" y2="166" stroke="#532638" stroke-opacity="0.35" stroke-width="1"/>
+      <rect x="48" y="155" width="10" height="10" rx="1.5" fill="none" stroke="#532638" stroke-width="1"/>
+      <text x="64" y="165">header.tsx</text>
+
+      <line x1="34" y1="196" x2="46" y2="196" stroke="#532638" stroke-opacity="0.35" stroke-width="1"/>
+      <rect x="48" y="185" width="10" height="10" rx="1.5" fill="none" stroke="#532638" stroke-width="1"/>
+      <text x="64" y="195">utils.ts</text>
+      <circle class="pulse" cx="142" cy="190" r="3.5" fill="#27E62B" style="animation-delay:0.8s"/>
+
+      <line x1="34" y1="226" x2="46" y2="226" stroke="#532638" stroke-opacity="0.35" stroke-width="1"/>
+      <rect x="48" y="215" width="10" height="10" rx="1.5" fill="none" stroke="#532638" stroke-width="1"/>
+      <text x="64" y="225">db.ts</text>
+
+      <line x1="34" y1="256" x2="46" y2="256" stroke="#532638" stroke-opacity="0.35" stroke-width="1"/>
+      <rect x="48" y="245" width="10" height="10" rx="1.5" fill="none" stroke="#532638" stroke-width="1"/>
+      <text x="64" y="255">api.ts</text>
+      <circle class="pulse" cx="142" cy="250" r="3.5" fill="#BE5133" style="animation-delay:1.6s"/>
+    </g>
+  </g>
+
+  <!-- arrows from src to right panels -->
+  <g fill="none" stroke="#BE5133" stroke-width="1.4" stroke-dasharray="3 4">
+    <path d="M160 110 C 172 110, 178 110, 184 110" marker-end="url(#hv-ah)"/>
+    <path d="M160 175 C 180 175, 260 110, 312 110" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#hv-ah)"/>
+    <path d="M160 175 C 180 175, 176 240, 184 240" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#hv-ah)"/>
+    <path d="M160 240 C 220 240, 280 240, 312 240" marker-end="url(#hv-ah)"/>
+  </g>
+
+  <!-- call graph -->
+  <g>
+    <rect x="184" y="50" width="120" height="120" rx="6" fill="rgba(252,243,216,0.6)" stroke="#532638" stroke-opacity="0.22" stroke-width="1"/>
+    <text x="194" y="68" font-family="JetBrains Mono, ui-monospace, monospace" font-size="8" fill="rgba(42,18,27,0.58)" letter-spacing="0.14em">CALL GRAPH</text>
+    <g stroke="#532638" stroke-opacity="0.55" stroke-width="1" fill="none">
+      <path d="M241 95 L 218 117" marker-end="url(#hv-ah-s)"/>
+      <path d="M247 95 L 270 117" marker-end="url(#hv-ah-s)"/>
+      <path d="M214 127 L 214 147" marker-end="url(#hv-ah-s)"/>
+      <path d="M274 127 L 274 147" marker-end="url(#hv-ah-s)"/>
+    </g>
+    <g fill="#532638">
+      <circle cx="244" cy="92" r="5"/>
+      <circle cx="214" cy="122" r="5"/>
+      <circle cx="274" cy="122" r="5"/>
+      <circle cx="214" cy="152" r="5"/>
+      <circle class="emerge" cx="274" cy="152" r="5" fill="#BE5133"/>
+    </g>
+    <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="7" fill="#2A121B" fill-opacity="0.7">
+      <text x="244" y="83" text-anchor="middle">main</text>
+      <text x="206" y="125" text-anchor="end">init</text>
+      <text x="282" y="125">load</text>
+      <text x="206" y="155" text-anchor="end">cfg</text>
+      <text x="282" y="155">api</text>
+    </g>
+  </g>
+
+  <!-- hierarchy -->
+  <g>
+    <rect x="312" y="50" width="120" height="120" rx="6" fill="rgba(252,243,216,0.6)" stroke="#532638" stroke-opacity="0.22" stroke-width="1"/>
+    <text x="322" y="68" font-family="JetBrains Mono, ui-monospace, monospace" font-size="8" fill="rgba(42,18,27,0.58)" letter-spacing="0.14em">HIERARCHY</text>
+    <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" fill="#2A121B">
+      <text x="322" y="88">▾ app</text>
+      <text x="334" y="104">▾ ui</text>
+      <text x="346" y="120">Button</text>
+      <text x="346" y="134">Card</text>
+      <text x="334" y="150">api</text>
+      <text x="346" y="164">route</text>
+    </g>
+    <g stroke="#532638" stroke-opacity="0.3" stroke-width="1">
+      <line x1="328" y1="92" x2="328" y2="152"/>
+      <line x1="340" y1="108" x2="340" y2="136"/>
+      <line x1="328" y1="152" x2="342" y2="152"/>
+      <line x1="340" y1="164" x2="344" y2="164"/>
+    </g>
+  </g>
+
+  <!-- vectors — diagonal wave across the grid -->
+  <g>
+    <rect x="184" y="180" width="120" height="120" rx="6" fill="#2A121B"/>
+    <text x="194" y="198" font-family="JetBrains Mono, ui-monospace, monospace" font-size="8" fill="rgba(252,243,216,0.6)" letter-spacing="0.14em">VECTORS</text>
+    <g fill="#E59A63">
+      <!-- 6×5 grid; delay = (col + row) * 0.14s so the wave travels diagonally -->
+      <!-- row 0 -->
+      <circle class="wave" cx="196" cy="214" r="2" style="animation-delay:0s"/>
+      <circle class="wave" cx="213" cy="214" r="2" style="animation-delay:0.14s"/>
+      <circle class="wave" cx="230" cy="214" r="2" style="animation-delay:0.28s"/>
+      <circle class="wave" cx="247" cy="214" r="2" style="animation-delay:0.42s"/>
+      <circle class="wave" cx="264" cy="214" r="2" style="animation-delay:0.56s"/>
+      <circle class="wave" cx="281" cy="214" r="2" style="animation-delay:0.70s"/>
+      <!-- row 1 -->
+      <circle class="wave" cx="196" cy="229" r="2" style="animation-delay:0.14s"/>
+      <circle class="wave" cx="213" cy="229" r="2" style="animation-delay:0.28s"/>
+      <circle class="wave" cx="230" cy="229" r="2" style="animation-delay:0.42s"/>
+      <circle class="wave" cx="247" cy="229" r="2" style="animation-delay:0.56s"/>
+      <circle class="wave" cx="264" cy="229" r="2" style="animation-delay:0.70s"/>
+      <circle class="wave" cx="281" cy="229" r="2" style="animation-delay:0.84s"/>
+      <!-- row 2 -->
+      <circle class="wave" cx="196" cy="244" r="2" style="animation-delay:0.28s"/>
+      <circle class="wave" cx="213" cy="244" r="2" style="animation-delay:0.42s"/>
+      <circle class="wave" cx="230" cy="244" r="2" style="animation-delay:0.56s"/>
+      <circle class="wave" cx="247" cy="244" r="2" style="animation-delay:0.70s"/>
+      <circle class="wave" cx="264" cy="244" r="2" style="animation-delay:0.84s"/>
+      <circle class="wave" cx="281" cy="244" r="2" style="animation-delay:0.98s"/>
+      <!-- row 3 -->
+      <circle class="wave" cx="196" cy="259" r="2" style="animation-delay:0.42s"/>
+      <circle class="wave" cx="213" cy="259" r="2" style="animation-delay:0.56s"/>
+      <circle class="wave" cx="230" cy="259" r="2" style="animation-delay:0.70s"/>
+      <circle class="wave" cx="247" cy="259" r="2" style="animation-delay:0.84s"/>
+      <circle class="wave" cx="264" cy="259" r="2" style="animation-delay:0.98s"/>
+      <circle class="wave" cx="281" cy="259" r="2" style="animation-delay:1.12s"/>
+      <!-- row 4 -->
+      <circle class="wave" cx="196" cy="274" r="2" style="animation-delay:0.56s"/>
+      <circle class="wave" cx="213" cy="274" r="2" style="animation-delay:0.70s"/>
+      <circle class="wave" cx="230" cy="274" r="2" style="animation-delay:0.84s"/>
+      <circle class="wave" cx="247" cy="274" r="2" style="animation-delay:0.98s"/>
+      <circle class="wave" cx="264" cy="274" r="2" style="animation-delay:1.12s"/>
+      <circle class="wave" cx="281" cy="274" r="2" style="animation-delay:1.26s"/>
+    </g>
+    <!-- a freshly emerged vector — peach, larger, slow breath -->
+    <circle class="emerge" cx="247" cy="244" r="3.2" fill="#BE5133"/>
+  </g>
+
+  <!-- symbols -->
+  <g>
+    <rect x="312" y="180" width="120" height="120" rx="6" fill="rgba(252,243,216,0.6)" stroke="#532638" stroke-opacity="0.22" stroke-width="1"/>
+    <text x="322" y="198" font-family="JetBrains Mono, ui-monospace, monospace" font-size="8" fill="rgba(42,18,27,0.58)" letter-spacing="0.14em">SYMBOLS</text>
+    <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" fill="#2A121B">
+      <text x="322" y="218">indexCode</text>
+      <rect x="398" y="209" width="24" height="12" rx="6" fill="#532638"/>
+      <text x="410" y="218" text-anchor="middle" fill="#FCF3D8" font-size="7">fn</text>
+      <text x="322" y="236">Chunker</text>
+      <rect class="pulse" x="398" y="227" width="24" height="12" rx="6" fill="#BE5133"/>
+      <text x="410" y="236" text-anchor="middle" fill="#FCF3D8" font-size="7">cls</text>
+      <text x="322" y="254">embed</text>
+      <rect x="398" y="245" width="24" height="12" rx="6" fill="#532638"/>
+      <text x="410" y="254" text-anchor="middle" fill="#FCF3D8" font-size="7">fn</text>
+      <text x="322" y="272">flow</text>
+      <rect x="398" y="263" width="24" height="12" rx="6" fill="#E59A63"/>
+      <text x="410" y="272" text-anchor="middle" fill="#2A121B" font-size="7">mod</text>
+      <text x="322" y="290">sink</text>
+      <rect x="398" y="281" width="24" height="12" rx="6" fill="#532638"/>
+      <text x="410" y="290" text-anchor="middle" fill="#FCF3D8" font-size="7">fn</text>
+    </g>
+  </g>
+
+  <!-- footer stats -->
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" letter-spacing="0.14em">
+    <line x1="16" y1="330" x2="424" y2="330" stroke="#532638" stroke-opacity="0.2" stroke-width="1"/>
+    <text x="16" y="356" fill="rgba(42,18,27,0.58)">2,410 FILES</text>
+    <text x="156" y="356" fill="rgba(42,18,27,0.58)">18,074 CHUNKS</text>
+    <text class="pulse" x="316" y="356" fill="#BE5133" style="animation-delay:1s">Δ 12</text>
+    <circle class="pulse" cx="408" cy="352" r="4" fill="#27E62B"/>
+  </g>
+</svg>

@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" role="img" aria-label="Hacker News trending topics detector starter: fetch HN threads via the Algolia API, recursively pull nested comments, LLM-extract typed topic lists per message with Gemini 2.5 Flash, and rank topics by weighted mention count (thread=5, comment=1). Incremental — only new or changed threads re-extract. 30-second refresh. Keywords: Hacker News, trending topics, LLM extraction, Gemini, news intelligence, topic ranking, Algolia API, weighted scoring, Postgres.">
+  <title>HN trending topics detector</title>
+  <desc>Built with CocoIndex — a bright weighted-mention-count ranking for Hacker News. Threads and their nested comments flow through an LLM topic extractor; topics are ranked with thread×5 · comment×1 weighting and surfaced as a live top-6 bar chart in the brand palette.</desc>
+
+  <defs>
+    <linearGradient id="hn-title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#FFD94A"/>
+      <stop offset="50%"  stop-color="#FF8A9B"/>
+      <stop offset="100%" stop-color="#F5B07F"/>
+    </linearGradient>
+    <style>
+      .pulse { animation: p 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+      @keyframes p { 0%,100% { opacity: 1; transform: scale(1) } 50% { opacity: 0.55; transform: scale(1.18) } }
+      .flow { stroke-dasharray: 4 6; animation: mv 1.4s linear infinite; }
+      @keyframes mv { from { stroke-dashoffset: 0 } to { stroke-dashoffset: -20 } }
+      .bar { transform-origin: left center; transform-box: fill-box; animation: grow 18s ease-in-out infinite; }
+      @keyframes grow { 0%,92%,100% { transform: scaleX(1) } 94%,97% { transform: scaleX(1.06) } }
+    </style>
+    <marker id="hn-arrm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#6DFFB0"/>
+    </marker>
+  </defs>
+
+  <!-- BUILT WITH COCOINDEX ❤ tag -->
+  <g transform="translate(16, 14)">
+    <rect width="186" height="24" rx="12" fill="rgba(255,138,155,0.14)"/>
+    <text x="93" y="12" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" letter-spacing="0.16em" font-weight="800" fill="#FF8A9B">BUILT WITH COCOINDEX ❤</text>
+  </g>
+
+  <!-- 30-second refresh pulse (top-right) -->
+  <g transform="translate(460, 26)" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.18em" font-weight="700">
+    <circle class="pulse" cx="0" cy="0" r="3.4" fill="#FFD94A"/>
+    <text x="-10" y="0" dominant-baseline="central" text-anchor="end" fill="rgba(252,243,216,0.7)">30S REFRESH</text>
+  </g>
+
+  <!-- Title with the same gradient as the flagship hero -->
+  <text x="20" y="66" font-family="Inter, -apple-system, system-ui, sans-serif" font-size="22" font-weight="900" letter-spacing="-0.02em" fill="#FFD94A">HN <tspan fill="#6DFFB0" font-style="italic">→</tspan> <tspan fill="#FCF3D8">trending topics</tspan></text>
+
+  <!-- ============ LEFT: threads via Algolia ============ -->
+  <g transform="translate(20, 86)" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9">
+    <!-- HN "Y" badge -->
+    <g>
+      <rect width="18" height="18" rx="3" fill="#FF6600"/>
+      <text x="9" y="9" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="900" fill="#FCF3D8">Y</text>
+      <text x="24" y="9" dominant-baseline="central" font-size="9" letter-spacing="0.16em" font-weight="700" fill="rgba(252,243,216,0.7)">HN · ALGOLIA</text>
+    </g>
+
+    <!-- Thread card 1 -->
+    <g transform="translate(0, 28)">
+      <rect width="108" height="46" rx="7" fill="rgba(252,243,216,0.08)"/>
+      <text x="8" y="14" fill="#FF6600" font-weight="800">Show HN</text>
+      <text x="8" y="26" fill="#FCF3D8">CocoIndex</text>
+      <text x="8" y="38" font-size="8"><tspan fill="#FF8A9B">▲ 234</tspan> · <tspan fill="#7FD8FF">42c</tspan></text>
+      <!-- nested-comment hint -->
+      <g stroke="#7FD8FF" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6">
+        <path d="M86 14 L 92 14 L 92 22"/>
+        <path d="M92 22 L 98 22"/>
+      </g>
+    </g>
+
+    <!-- Thread card 2 -->
+    <g transform="translate(0, 84)">
+      <rect width="108" height="46" rx="7" fill="rgba(252,243,216,0.08)"/>
+      <text x="8" y="14" fill="#FF6600" font-weight="800">Ask HN</text>
+      <text x="8" y="26" fill="#FCF3D8">Best AI tools</text>
+      <text x="8" y="38" font-size="8"><tspan fill="#FF8A9B">▲ 512</tspan> · <tspan fill="#7FD8FF">128c</tspan></text>
+      <g stroke="#7FD8FF" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6">
+        <path d="M86 14 L 92 14 L 92 22"/>
+        <path d="M92 22 L 98 22"/>
+      </g>
+    </g>
+
+    <!-- Thread card 3 -->
+    <g transform="translate(0, 140)">
+      <rect width="108" height="46" rx="7" fill="rgba(252,243,216,0.08)"/>
+      <text x="8" y="14" fill="#FF6600" font-weight="800">Thread</text>
+      <text x="8" y="26" fill="#FCF3D8">MCP servers</text>
+      <text x="8" y="38" font-size="8"><tspan fill="#FF8A9B">▲ 187</tspan> · <tspan fill="#7FD8FF">67c</tspan></text>
+      <g stroke="#7FD8FF" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6">
+        <path d="M86 14 L 92 14 L 92 22"/>
+        <path d="M92 22 L 98 22"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Animated flow arrow: threads → LLM extraction → ranking -->
+  <g>
+    <path class="flow" d="M134 200 L 170 200" stroke="#6DFFB0" stroke-width="1.8" fill="none" stroke-linecap="round" marker-end="url(#hn-arrm)"/>
+    <text x="152" y="192" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="8" letter-spacing="0.1em" font-weight="700" fill="#6DFFB0">LLM</text>
+  </g>
+
+  <!-- ============ RIGHT: trending topics bar chart ============ -->
+  <g transform="translate(180, 94)" font-family="Inter, -apple-system, system-ui, sans-serif">
+    <!-- header -->
+    <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.18em" font-weight="700">
+      <text x="0" y="0" dominant-baseline="central" fill="rgba(252,243,216,0.7)">TRENDING · NOW</text>
+      <text x="280" y="0" text-anchor="end" dominant-baseline="central" fill="#6DFFB0">Δ FRESH</text>
+    </g>
+
+    <!-- Bar 1: Claude 42 -->
+    <g transform="translate(0, 20)">
+      <text x="0" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#FCF3D8">Claude</text>
+      <rect class="bar" x="68" y="-5" width="176" height="12" rx="3" fill="#FF8A9B"/>
+      <text x="250" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#FF8A9B">42</text>
+    </g>
+
+    <!-- Bar 2: Rust 31 -->
+    <g transform="translate(0, 42)">
+      <text x="0" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#FCF3D8">Rust</text>
+      <rect class="bar" x="68" y="-5" width="130" height="12" rx="3" fill="#FFD94A" style="animation-delay:2s"/>
+      <text x="250" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#FFD94A">31</text>
+    </g>
+
+    <!-- Bar 3: Gemini 27 -->
+    <g transform="translate(0, 64)">
+      <text x="0" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#FCF3D8">Gemini</text>
+      <rect class="bar" x="68" y="-5" width="113" height="12" rx="3" fill="#6DFFB0" style="animation-delay:4s"/>
+      <text x="250" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#6DFFB0">27</text>
+    </g>
+
+    <!-- Bar 4: MCP 22 -->
+    <g transform="translate(0, 86)">
+      <text x="0" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#FCF3D8">MCP</text>
+      <rect class="bar" x="68" y="-5" width="92" height="12" rx="3" fill="#7FD8FF" style="animation-delay:6s"/>
+      <text x="250" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#7FD8FF">22</text>
+    </g>
+
+    <!-- Bar 5: CocoIndex 18 -->
+    <g transform="translate(0, 108)">
+      <text x="0" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#FCF3D8">CocoIndex</text>
+      <rect class="bar" x="68" y="-5" width="75" height="12" rx="3" fill="#C9B3FF" style="animation-delay:8s"/>
+      <text x="250" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#C9B3FF">18</text>
+    </g>
+
+    <!-- Bar 6: AI agents 14 -->
+    <g transform="translate(0, 130)">
+      <text x="0" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#FCF3D8">AI agents</text>
+      <rect class="bar" x="68" y="-5" width="59" height="12" rx="3" fill="#F5B07F" style="animation-delay:10s"/>
+      <text x="250" y="6" dominant-baseline="central" font-size="11" font-weight="800" fill="#F5B07F">14</text>
+    </g>
+  </g>
+
+  <!-- Weighted-scoring rule (bottom legend) -->
+  <g transform="translate(20, 304)" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="0.14em" font-weight="700">
+    <g>
+      <rect x="0" y="-5" width="10" height="10" rx="2" fill="#FF8A9B"/>
+      <text x="16" y="0" dominant-baseline="central" fill="#FF8A9B">THREAD ×5</text>
+    </g>
+    <g transform="translate(106, 0)">
+      <rect x="0" y="-5" width="10" height="10" rx="2" fill="#7FD8FF"/>
+      <text x="16" y="0" dominant-baseline="central" fill="#7FD8FF">COMMENT ×1</text>
+    </g>
+    <g transform="translate(226, 0)">
+      <text x="0" y="0" dominant-baseline="central" fill="rgba(252,243,216,0.55)">GEMINI 2.5 FLASH</text>
+    </g>
+    <text x="460" y="0" text-anchor="end" dominant-baseline="central" fill="rgba(252,243,216,0.55)">Postgres</text>
+  </g>
+</svg>

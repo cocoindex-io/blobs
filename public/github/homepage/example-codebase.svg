@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Real-time codebase indexing — code editor with @cocoindex.flow">
+  <defs>
+    <pattern id="grid-code" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(252,243,216,0.06)" stroke-width="1"/>
+    </pattern>
+    <style>
+      .blink{animation:b 1.2s steps(2,end) infinite}
+      @keyframes b{0%,49%{opacity:1}50%,100%{opacity:0}}
+    </style>
+  </defs>
+  <rect width="480" height="300" fill="#2A121B"/>
+  <rect width="480" height="300" fill="url(#grid-code)"/>
+
+  <!-- top-left tag -->
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="11" fill="rgba(252,243,216,0.7)">
+    <text x="20" y="26">Codebase · real-time</text>
+    <text x="460" y="26" text-anchor="end">main.py</text>
+  </g>
+
+  <!-- editor card -->
+  <rect x="40" y="40" width="380" height="220" rx="6" fill="rgba(252,243,216,0.06)" stroke="rgba(252,243,216,0.15)"/>
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" fill="#FCF3D8">
+    <text x="56" y="68"><tspan fill="#E59A63">def</tspan> <tspan fill="#FB6A76">index_code</tspan><tspan>(repo):</tspan></text>
+    <text x="70" y="90" opacity="0.5"># walk the tree</text>
+    <text x="70" y="112">for file in repo.files:</text>
+    <text x="86" y="134">chunks = <tspan fill="#FB6A76">chunk</tspan>(file)</text>
+    <text x="86" y="156">emb = <tspan fill="#FB6A76">embed</tspan>(chunks)</text>
+    <text x="86" y="178"><tspan fill="#FB6A76">sink</tspan>(emb, <tspan fill="#27E62B">"postgres"</tspan>)</text>
+    <text x="56" y="222" fill="#E59A63">@cocoindex.flow</text>
+    <rect class="blink" x="200" y="166" width="7" height="14" fill="#27E62B"/>
+  </g>
+</svg>
