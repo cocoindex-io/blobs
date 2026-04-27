@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 240" role="img"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 220" role="img"
      aria-labelledby="app-title app-desc"
      font-family="Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif">
-  <title id="app-title">App definition: MultiCodebaseSummarization</title>
-  <desc id="app-desc">A CocoIndex App ties the main function app_main together with its arguments root_dir = ./projects and output_dir = ./output, becoming the single runnable unit that sweeps the source folder and writes a wiki page per project to the target folder.</desc>
+  <title id="app-title">App definition</title>
+  <desc id="app-desc">A CocoIndex App binds a source-state, a transform F(x), and a target-state into a single runnable unit. The App receives data from a source system on the left and writes results to a target system on the right.</desc>
 
   <!--
     Drawn against the docs diagram palette
@@ -11,26 +11,26 @@
       cream-warm    color-mix(peach 10%, cream)  → #FAEAC0   app container
       maroon        #532638   stroke / labels
       coral         #BE5133   accent stroke / app outline
+      palm          #27E62B   highlight ("the thing being discussed")
       maroon-ink    #2A121B   primary text
-      muted ink     rgba(42,18,27,.58)            secondary labels
     Shape semantics (single source of truth: docs/src/components/diagrams/README.md):
-      sharp rectangle  → DATA  (root_dir / output_dir args)
-      round rectangle  → LOGIC (app_main, source / target system)
-      peach round box  → CocoIndex App  (the highlighted container)
+      sharp rectangle             → DATA  (State)
+      round rectangle             → LOGIC (Source System, Target System, Transform F(x))
+      bullet (flat left, round right) → TARGET STATE
+      peach round container       → CocoIndex App
+      thick palm-green border     → highlight on whichever shape the prose discusses
   -->
   <defs>
     <style>
       .dg-source-target { fill: #FCF3D8; stroke: #532638; stroke-width: 1.4; }
       .dg-app           { fill: #FAEAC0; stroke: #BE5133; stroke-width: 1.6; }
+      .dg-app-highlight { fill: none;    stroke: #27E62B; stroke-width: 4; }
       .dg-data          { fill: #FCF3D8; stroke: #532638; stroke-width: 1.4; }
-      .dg-logic--main   { fill: #FCF3D8; stroke: #BE5133; stroke-width: 1.8; }
-      .dg-label         { fill: #2A121B; font-size: 13px; font-weight: 500; text-anchor: middle; dominant-baseline: middle; }
-      .dg-label--small  { font-size: 11px; }
-      .dg-label--caps   { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
-                          font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-                          fill: rgba(42,18,27,0.58); }
-      .dg-label--mono   { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
-                          font-size: 11px; }
+      .dg-logic         { fill: #FCF3D8; stroke: #532638; stroke-width: 1.4; }
+      .dg-target-state  { fill: #FCF3D8; stroke: #532638; stroke-width: 1.4; }
+      .dg-label         { fill: #2A121B; font-size: 14px; font-weight: 500;
+                          text-anchor: middle; dominant-baseline: middle; }
+      .dg-label--app    { fill: #BE5133; font-size: 14px; font-weight: 700; }
       .dg-arrow         { fill: none; stroke: #2A121B; stroke-width: 1.6; }
       .dg-arrow-head    { fill: #2A121B; }
       .dg-connector     { fill: none; stroke: rgba(42,18,27,0.45); stroke-width: 1.4;
@@ -38,62 +38,60 @@
     </style>
   </defs>
 
-  <!-- ───── Source system: ./projects/ ───── -->
+  <!-- ───── Source System (logic, round rectangle) ───── -->
   <g>
-    <rect class="dg-source-target" x="20" y="74" width="140" height="92" rx="10"/>
-    <text class="dg-label dg-label--caps" x="90" y="98">SOURCE</text>
-    <text class="dg-label dg-label--mono" x="90" y="125">./projects/</text>
-    <text class="dg-label dg-label--small" x="90" y="146" fill="rgba(42,18,27,0.58)">N project dirs</text>
+    <rect class="dg-source-target" x="20" y="60" width="100" height="100" rx="10"/>
+    <text class="dg-label" x="70" y="103">Source</text>
+    <text class="dg-label" x="70" y="121">System</text>
   </g>
 
-  <!-- ───── App container: MultiCodebaseSummarization ───── -->
+  <!-- Source → App connector (dashed, no arrowhead per Connector convention) -->
+  <path class="dg-connector" d="M 120 110 L 152 110"/>
+
+  <!-- ───── CocoIndex App (peach container, palm-green highlight) ───── -->
   <g>
-    <rect class="dg-app" x="180" y="30" width="440" height="180" rx="16"/>
-    <text class="dg-label dg-label--caps" x="400" y="54" fill="#BE5133">CocoIndex App</text>
-    <text class="dg-label" x="400" y="74" font-weight="600">MultiCodebaseSummarization</text>
+    <!-- highlight ring sits just outside the app container -->
+    <rect class="dg-app-highlight" x="148" y="26" width="500" height="168" rx="18"/>
+    <rect class="dg-app"           x="152" y="30" width="492" height="160" rx="16"/>
+    <text class="dg-label dg-label--app" x="398" y="50">CocoIndex App</text>
 
-    <!-- root_dir argument (data) -->
+    <!-- State (data, sharp rectangle) -->
     <g>
-      <rect class="dg-data" x="200" y="118" width="120" height="64"/>
-      <text class="dg-label dg-label--caps" x="260" y="138">ARG</text>
-      <text class="dg-label dg-label--mono" x="260" y="159">root_dir</text>
-      <text class="dg-label dg-label--small" x="260" y="175" fill="rgba(42,18,27,0.58)">./projects</text>
+      <rect class="dg-data" x="180" y="80" width="96" height="80"/>
+      <text class="dg-label" x="228" y="120">State</text>
     </g>
 
-    <!-- app_main function (logic, highlighted as main) -->
+    <!-- arrow: State → Transform -->
+    <path class="dg-arrow" d="M 276 120 L 314 120"/>
+    <polygon class="dg-arrow-head" points="320,120 312,116 312,124"/>
+
+    <!-- Transform F(x) (logic, round rectangle) -->
     <g>
-      <rect class="dg-logic--main" x="340" y="115" width="120" height="70" rx="10"/>
-      <text class="dg-label dg-label--caps" x="400" y="135" fill="#BE5133">MAIN FN</text>
-      <text class="dg-label dg-label--mono" x="400" y="156" font-weight="600">app_main()</text>
-      <text class="dg-label dg-label--small" x="400" y="173" fill="rgba(42,18,27,0.58)">@coco.function</text>
+      <rect class="dg-logic" x="320" y="80" width="120" height="80" rx="10"/>
+      <text class="dg-label" x="380" y="113">Transform</text>
+      <text class="dg-label" x="380" y="131">F(x)</text>
     </g>
 
-    <!-- output_dir argument (data) -->
-    <g>
-      <rect class="dg-data" x="480" y="118" width="120" height="64"/>
-      <text class="dg-label dg-label--caps" x="540" y="138">ARG</text>
-      <text class="dg-label dg-label--mono" x="540" y="159">output_dir</text>
-      <text class="dg-label dg-label--small" x="540" y="175" fill="rgba(42,18,27,0.58)">./output</text>
-    </g>
+    <!-- arrow: Transform → Target State -->
+    <path class="dg-arrow" d="M 440 120 L 478 120"/>
+    <polygon class="dg-arrow-head" points="484,120 476,116 476,124"/>
 
-    <!-- bind arrows: root_dir → app_main → output_dir -->
+    <!-- Target State (target-state bullet: flat left, rounded right) -->
     <g>
-      <path class="dg-arrow" d="M 320 150 L 336 150"/>
-      <polygon class="dg-arrow-head" points="340,150 333,146 333,154"/>
-      <path class="dg-arrow" d="M 460 150 L 476 150"/>
-      <polygon class="dg-arrow-head" points="480,150 473,146 473,154"/>
+      <path class="dg-target-state"
+            d="M 484 80 L 580 80 A 40 40 0 0 1 580 160 L 484 160 Z"/>
+      <text class="dg-label" x="528" y="113">Target</text>
+      <text class="dg-label" x="528" y="131">State</text>
     </g>
   </g>
 
-  <!-- ───── Target system: ./output/ ───── -->
-  <g>
-    <rect class="dg-source-target" x="640" y="74" width="140" height="92" rx="10"/>
-    <text class="dg-label dg-label--caps" x="710" y="98">TARGET</text>
-    <text class="dg-label dg-label--mono" x="710" y="125">./output/</text>
-    <text class="dg-label dg-label--small" x="710" y="146" fill="rgba(42,18,27,0.58)">wiki page per project</text>
-  </g>
+  <!-- App → Target connector (dashed) -->
+  <path class="dg-connector" d="M 644 110 L 680 110"/>
 
-  <!-- ───── External dashed connectors ───── -->
-  <path class="dg-connector" d="M 160 120 L 200 120"/>
-  <path class="dg-connector" d="M 600 120 L 640 120"/>
+  <!-- ───── Target System (logic, round rectangle) ───── -->
+  <g>
+    <rect class="dg-source-target" x="680" y="60" width="100" height="100" rx="10"/>
+    <text class="dg-label" x="730" y="103">Target</text>
+    <text class="dg-label" x="730" y="121">System</text>
+  </g>
 </svg>
