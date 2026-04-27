@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-320 15 620 94" role="img" aria-label="Appreciate a star ❤️ — a cursor hovers over the Star button, clicks, the star fills, tiny stars burst out in celebration, and the count ticks from 7.0k to 7.1k.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-320 15 620 94" role="img" aria-label="Appreciate a star ❤️ — a cursor hovers over the Star button, clicks, the star fills, tiny stars burst out in celebration, and the count ticks from 7.1k to 7.2k.">
   <title>Star CocoIndex on GitHub</title>
-  <desc>Animated GitHub-style "Star" button. A cursor arrows in, clicks, the outline star fills yellow, a celebratory confetti of small stars bursts outward in random directions and sizes, and the counter ticks from 7.0k to 7.1k.</desc>
+  <desc>Animated GitHub-style "Star" button. A cursor arrows in, clicks, the outline star fills yellow, a celebratory confetti of small stars bursts outward in random directions and sizes, and the counter ticks from 7.1k to 7.2k.</desc>
   <defs>
     <style>
       /* 6-second cycle:
@@ -26,8 +26,8 @@
 
       .label-star    { opacity: 1; animation: labelOff 6s ease-in-out infinite; }
       .label-starred { opacity: 0; animation: labelOn  6s ease-in-out infinite; }
-      .count-70      { opacity: 1; animation: labelOff 6s ease-in-out infinite; }
-      .count-71      { opacity: 0; animation: labelOn  6s ease-in-out infinite; }
+      .count-71      { opacity: 1; animation: labelOff 6s ease-in-out infinite; }
+      .count-72      { opacity: 0; animation: labelOn  6s ease-in-out infinite; }
       @keyframes labelOff { 0%, 30%, 82%, 100% { opacity: 1 } 34%, 80% { opacity: 0 } }
       @keyframes labelOn  { 0%, 30%, 82%, 100% { opacity: 0 } 34%, 80% { opacity: 1 } }
 
@@ -142,8 +142,8 @@
   <!-- count pill -->
   <g>
     <rect x="230" y="62" width="56" height="26" rx="6" fill="rgba(252,243,216,0.08)" stroke="rgba(252,243,216,0.22)"/>
-    <text class="count-70" x="258" y="80" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#FCF3D8">7.0k</text>
-    <text class="count-71" x="258" y="80" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" font-weight="700" fill="#FFD94A">7.1k</text>
+    <text class="count-71" x="258" y="80" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#FCF3D8">7.1k</text>
+    <text class="count-72" x="258" y="80" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" font-weight="700" fill="#FFD94A">7.2k</text>
   </g>
 
   <!-- cursor (arrow) -->
