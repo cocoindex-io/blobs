@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-320 15 620 94" role="img" aria-label="Appreciate a star ❤️ — a cursor hovers over the Star button, clicks, the star fills, tiny stars burst out in celebration, and the count ticks from 7.6k to 7.7k.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-320 15 620 94" role="img" aria-label="Appreciate a star ❤️ — a cursor hovers over the Star button, clicks, the star fills, tiny stars burst out in celebration, and the count ticks up.">
   <title>Star CocoIndex on GitHub (light theme)</title>
-  <desc>Animated GitHub-style "Star" button (light theme). A cursor arrows in, clicks, the outline star fills gold, a celebratory confetti of small stars bursts outward, and the counter ticks from 7.6k to 7.7k. Uses the native GitHub light-button palette — canvas-default pill, muted border, ink text, GitHub-gold star.</desc>
+  <desc>Animated GitHub-style "Star" button (light theme). A cursor arrows in, clicks, the outline star fills gold, a celebratory confetti of small stars bursts outward, and the counter ticks up. Uses the native GitHub light-button palette — canvas-default pill, muted border, ink text, GitHub-gold star.</desc>
   <defs>
     <style>
       /* 6-second cycle:

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 36" role="img" aria-label="Star us on GitHub — cursor clicks the star, it fills yellow, a small burst fires, count ticks 7.6k → 7.7k">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 36" role="img" aria-label="Star us on GitHub — cursor clicks the star, it fills yellow, a small burst fires, count ticks up">
   <title>Star us on GitHub</title>
-  <desc>Compact GitHub-style Star button that animates on a 4.5s loop: cursor glides in, clicks the outline star, the star fills yellow, a small confetti burst fires, and the count pill ticks from 7.6k to 7.7k.</desc>
+  <desc>Compact GitHub-style Star button that animates on a 4.5s loop: cursor glides in, clicks the outline star, the star fills yellow, a small confetti burst fires, and the count pill ticks up.</desc>
   <defs>
     <style>
       .empty { animation: emptyStar 4.5s ease-in-out infinite; }

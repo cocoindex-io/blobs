@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-320 15 620 94" role="img" aria-label="Appreciate a star ❤️ — a cursor hovers over the Star button, clicks, the star fills, tiny stars burst out in celebration, and the count ticks from 7.6k to 7.7k.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-320 15 620 94" role="img" aria-label="Appreciate a star ❤️ — a cursor hovers over the Star button, clicks, the star fills, tiny stars burst out in celebration, and the count ticks up.">
   <title>Star CocoIndex on GitHub</title>
-  <desc>Animated GitHub-style "Star" button. A cursor arrows in, clicks, the outline star fills yellow, a celebratory confetti of small stars bursts outward in random directions and sizes, and the counter ticks from 7.6k to 7.7k.</desc>
+  <desc>Animated GitHub-style "Star" button. A cursor arrows in, clicks, the outline star fills yellow, a celebratory confetti of small stars bursts outward in random directions and sizes, and the counter ticks up.</desc>
   <defs>
     <style>
       /* 6-second cycle:
