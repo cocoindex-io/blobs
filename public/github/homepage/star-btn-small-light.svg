@@ -11,8 +11,8 @@
                               34% { opacity: 1; transform: scale(1.3); }
                               40%,78% { opacity: 1; transform: scale(1); } }
 
-      .label-star, .count-76    { animation: labelOff 4.5s ease-in-out infinite; }
-      .label-starred, .count-77 { animation: labelOn  4.5s ease-in-out infinite; opacity: 0; }
+      .label-star, .count-10    { animation: labelOff 4.5s ease-in-out infinite; }
+      .label-starred, .count-101 { animation: labelOn  4.5s ease-in-out infinite; opacity: 0; }
       @keyframes labelOff { 0%,28%,82%,100% { opacity: 1 } 34%,78% { opacity: 0 } }
       @keyframes labelOn  { 0%,28%,82%,100% { opacity: 0 } 34%,78% { opacity: 1 } }
 
@@ -88,8 +88,8 @@
   <!-- count pill (inset white on grey) -->
   <g>
     <rect x="84" y="10" width="36" height="16" rx="4" fill="#FFFFFF" stroke="#D1D9E0"/>
-    <text class="count-76" x="102" y="22" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="600" fill="#1F2328">7.6k</text>
-    <text class="count-77" x="102" y="22" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="#BF8700">7.7k</text>
+    <text class="count-10" x="102" y="22" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="600" fill="#1F2328">10k</text>
+    <text class="count-101" x="102" y="22" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="#BF8700">10.1k</text>
   </g>
 
   <!-- cursor (dark with white stroke so it reads on grey) -->
