@@ -88,8 +88,8 @@
   <!-- count pill -->
   <g>
     <rect x="84" y="10" width="36" height="16" rx="4" fill="rgba(252,243,216,0.08)" stroke="rgba(252,243,216,0.22)"/>
-    <text class="count-10" x="102" y="22" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="600" fill="#FCF3D8">10k</text>
-    <text class="count-101" x="102" y="22" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="#FFD94A">10.1k</text>
+    <text class="count-10" x="102" y="22" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="600" fill="#FCF3D8">10.2k</text>
+    <text class="count-101" x="102" y="22" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" font-weight="700" fill="#FFD94A">10.3k</text>
   </g>
 
   <!-- cursor -->
