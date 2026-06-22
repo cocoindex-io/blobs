@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:1240px}
+body{background:#FCF3D8;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;color:#2A121B;padding:48px 60px 40px;display:flex;flex-direction:column;align-items:center}
+.eyebrow{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;letter-spacing:.18em;text-transform:uppercase;color:#BE5133;display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.eyebrow .dot{width:12px;height:12px;border-radius:50%;background:#BE5133}.col{display:flex;flex-direction:column;align-items:center}.row{display:flex;gap:30px;align-items:stretch}
+.node{background:#FCF3D8;border:1.8px solid #532638;color:#2A121B;padding:16px 30px;text-align:center;min-width:300px}.row .node{min-width:0;flex:1}
+.node.logic{border-radius:18px}.node.data{border-radius:5px}.node.target{border-radius:4px 22px 22px 4px}
+.cap{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:rgba(42,18,27,0.58);margin-bottom:7px}
+.ttl{font-weight:600;font-size:26px;letter-spacing:-.01em}.ttl.mono{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:23px}.sub{font-size:18px;color:rgba(42,18,27,0.58);margin-top:7px;line-height:1.35}
+.arrow{display:flex;flex-direction:column;align-items:center;height:42px}.arrow .line{width:2.6px;flex:1;background:#532638}.arrow .head{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid #532638}
+.comp{background:color-mix(in oklab,#E59A63 13%,#FCF3D8);border:2px solid #BE5133;border-radius:24px;padding:22px 34px 30px;display:flex;flex-direction:column;align-items:center}
+.comp-cap{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:#BE5133;margin-bottom:20px;text-align:center}
+.comp-cap .reg{color:rgba(42,18,27,0.58);text-transform:none;letter-spacing:0;font-weight:500;font-family:Inter;font-size:17px}
+.legend{align-self:stretch;margin-top:38px;display:flex;justify-content:center;gap:34px;flex-wrap:wrap;border-top:1.5px solid rgba(42,18,27,0.16);padding-top:24px}
+.lg{display:flex;align-items:center;gap:12px;font-size:18px;color:rgba(42,18,27,0.58)}.sw{width:40px;height:26px;background:#FCF3D8;border:1.8px solid #532638;flex:none}
+.sw.logic{border-radius:13px}.sw.data{border-radius:4px}.sw.target{border-radius:3px 13px 13px 3px}.sw.comp{background:color-mix(in oklab,#E59A63 13%,#FCF3D8);border-color:#BE5133;border-radius:8px}
+</style></head><body><div class="eyebrow"><span class="dot"></span>CocoIndex &middot; Product recommendation flow</div><div class="col">
+<div class="node logic"><div class="cap">Source</div><div class="ttl mono">localfs.walk_dir</div><div class="sub">product JSON files</div></div><div class="arrow"><div class="line"></div><div class="head"></div></div>
+<div class="comp"><div class="comp-cap">Phase 1 &middot; Processing Component &middot; <span class="reg">use_mount &rarr; process_file (per product)</span></div><div class="col">
+<div class="node logic"><div class="cap">Transform · LLM extract</div><div class="ttl mono">instructor + LiteLLM</div><div class="sub">taxonomies + complementary taxonomies</div></div><div class="arrow"><div class="line"></div><div class="head"></div></div>
+<div class="row"><div class="node target"><div class="cap">Target state</div><div class="ttl mono">Product node</div><div class="sub">declare_record · id · title · price</div></div><div class="node data"><div class="cap">Data · carried forward</div><div class="ttl mono">taxonomy labels</div><div class="sub">what it is · what pairs with it</div></div></div></div></div><div class="arrow"><div class="line"></div><div class="head"></div></div>
+<div class="comp"><div class="comp-cap">Phase 2 &middot; Processing Component &middot; <span class="reg">mount &rarr; build_graph (one pass)</span></div><div class="col">
+<div class="node logic"><div class="cap">Transform</div><div class="ttl mono">dedupe taxonomy labels</div><div class="sub">distinct Taxonomy set</div></div><div class="arrow"><div class="line"></div><div class="head"></div></div>
+<div class="node target"><div class="cap">Target states</div><div class="ttl mono">Taxonomy · PRODUCT_TAXONOMY · PRODUCT_COMPLEMENTARY_TAXONOMY</div><div class="sub">declare_record · declare_relation</div></div></div></div><div class="arrow"><div class="line"></div><div class="head"></div></div>
+<div class="node logic"><div class="cap">Target</div><div class="ttl mono">Neo4j</div><div class="sub">product graph · Product · Taxonomy · edges</div></div></div>
+<div class="legend"><div class="lg"><span class="sw logic"></span>Source / transform</div><div class="lg"><span class="sw data"></span>Data (state)</div><div class="lg"><span class="sw target"></span>Target state</div><div class="lg"><span class="sw comp"></span>Processing component</div></div>
+</body></html>
