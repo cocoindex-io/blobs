@@ -142,8 +142,8 @@
   <!-- count pill (inset white) -->
   <g>
     <rect x="230" y="62" width="56" height="26" rx="6" fill="#FFFFFF" stroke="#D1D9E0"/>
-    <text class="count-10" x="258" y="80" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#1F2328">10.2k</text>
-    <text class="count-101" x="258" y="80" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" font-weight="700" fill="#BF8700">10.3k</text>
+    <text class="count-10" x="258" y="80" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" font-weight="600" fill="#1F2328">10.4k</text>
+    <text class="count-101" x="258" y="80" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" font-weight="700" fill="#BF8700">10.5k</text>
   </g>
 
   <!-- cursor (dark arrow with white stroke) -->
