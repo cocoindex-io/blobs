@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Embed Markdown from Amazon S3 — the Semantic Search 101 pipeline with an S3 bucket as the source.">
+  <title>Embed Markdown from Amazon S3</title>
+  <defs>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0 H0 V22" fill="none" stroke="#FCF3D8" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3DE05A"/>
+    </marker>
+    <marker id="ahc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#E59A63"/>
+    </marker>
+    <style>
+      .flow{stroke-dasharray:4 6;animation:mv 1.4s linear infinite}
+      @keyframes mv{to{stroke-dashoffset:-20}}
+      .pulse{animation:pl 2.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+      @keyframes pl{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+      .blink{animation:bk 1.05s steps(2,jump-none) infinite}
+      @keyframes bk{50%{opacity:0}}
+      .sq{opacity:.35;animation:sq 2.4s ease-in-out infinite}
+      @keyframes sq{0%,100%{opacity:.3}50%{opacity:1}}
+      .rise{transform-origin:bottom;transform-box:fill-box;animation:rs 3s ease-in-out infinite}
+      @keyframes rs{0%,100%{transform:scaleY(.82)}50%{transform:scaleY(1)}}
+      .drift{animation:df 6s ease-in-out infinite}
+      @keyframes df{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+      @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+    </style>
+  </defs>
+  <rect width="480" height="300" fill="#381E2E"/>
+  <rect width="480" height="300" fill="url(#grid)"/>
+  <g transform="translate(16,14)">
+    <rect width="97.7" height="24" rx="12" fill="rgba(252,243,216,0.05)" stroke="rgba(252,243,216,0.12)"/>
+    <text x="13" y="12.5" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9.5" letter-spacing="0.13em" font-weight="700" fill="rgba(252,243,216,0.82)">S3 · BUCKET</text>
+  </g>
+  <g transform="translate(354.6,14)">
+    <rect width="109.4" height="24" rx="12" fill="rgba(252,243,216,0.05)" stroke="rgba(252,243,216,0.12)"/>
+    <circle cx="16" cy="12" r="3" fill="#FB6A76"/><circle cx="27" cy="12" r="3" fill="#E59A63"/><circle cx="38" cy="12" r="3" fill="#3DE05A"/>
+    <text x="52" y="12.5" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="10" letter-spacing="0.02em" fill="rgba(252,243,216,0.62)">main.py</text>
+  </g>
+  <g transform="translate(20,104)"><rect x="0" y="0" width="130" height="130" rx="10" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/><text x="12" y="16" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.16em" font-weight="800" fill="#E59A63">🪣 S3 BUCKET</text><text x="12" y="32" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9" fill="#E59A63">s3://docs/</text><text x="12" y="47" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9" fill="rgba(252,243,216,0.72)">guide.md</text><text x="12" y="62" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9" fill="rgba(252,243,216,0.72)">spec.md</text><text x="12" y="77" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9" fill="rgba(252,243,216,0.72)">…</text><text x="12" y="120" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="8.5" font-style="italic" fill="rgba(252,243,216,0.40)">watched · incremental</text></g><g transform="translate(164,104)">
+    <text x="63" y="22" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" letter-spacing="0.12em" font-weight="700" fill="#E59A63">EMBED</text>
+    <path class="flow" d="M0 65 L26 65" stroke="#E59A63" stroke-width="1.8" fill="none" stroke-linecap="round" marker-end="url(#ahc)"/>
+    <g><rect class="sq" x="42" y="44" width="7" height="7" rx="1.6" fill="#E59A63" style="animation-delay:0s"/><rect class="sq" x="53" y="44" width="7" height="7" rx="1.6" fill="#C9A0FF" style="animation-delay:0.18s"/><rect class="sq" x="64" y="44" width="7" height="7" rx="1.6" fill="#E59A63" style="animation-delay:0.36s"/><rect class="sq" x="75" y="44" width="7" height="7" rx="1.6" fill="#C9A0FF" style="animation-delay:0.54s"/><rect class="sq" x="42" y="55" width="7" height="7" rx="1.6" fill="#C9A0FF" style="animation-delay:0.72s"/><rect class="sq" x="53" y="55" width="7" height="7" rx="1.6" fill="#E59A63" style="animation-delay:0.8999999999999999s"/><rect class="sq" x="64" y="55" width="7" height="7" rx="1.6" fill="#C9A0FF" style="animation-delay:0s"/><rect class="sq" x="75" y="55" width="7" height="7" rx="1.6" fill="#E59A63" style="animation-delay:0.18s"/><rect class="sq" x="42" y="66" width="7" height="7" rx="1.6" fill="#E59A63" style="animation-delay:0.36s"/><rect class="sq" x="53" y="66" width="7" height="7" rx="1.6" fill="#C9A0FF" style="animation-delay:0.54s"/><rect class="sq" x="64" y="66" width="7" height="7" rx="1.6" fill="#E59A63" style="animation-delay:0.72s"/><rect class="sq" x="75" y="66" width="7" height="7" rx="1.6" fill="#C9A0FF" style="animation-delay:0.8999999999999999s"/><rect class="sq" x="42" y="77" width="7" height="7" rx="1.6" fill="#C9A0FF" style="animation-delay:0s"/><rect class="sq" x="53" y="77" width="7" height="7" rx="1.6" fill="#E59A63" style="animation-delay:0.18s"/><rect class="sq" x="64" y="77" width="7" height="7" rx="1.6" fill="#C9A0FF" style="animation-delay:0.36s"/><rect class="sq" x="75" y="77" width="7" height="7" rx="1.6" fill="#E59A63" style="animation-delay:0.54s"/></g>
+    <text x="59" y="120" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" letter-spacing="0.1em" fill="rgba(252,243,216,0.40)">384-d</text>
+    <path class="flow" d="M100 65 L126 65" stroke="#3DE05A" stroke-width="1.8" fill="none" stroke-linecap="round" marker-end="url(#ah)"/>
+  </g><g transform="translate(316,104)"><rect x="0" y="0" width="144" height="130" rx="10" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/><text x="12" y="16" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.16em" font-weight="800" fill="#3DE05A">POSTGRES</text>
+    <g transform="translate(0,6)"><g fill="none" stroke="#3DE05A" stroke-opacity="0.9" stroke-width="1.6">
+    <ellipse cx="72" cy="44.64" rx="24" ry="8.64"/>
+    <path d="M48 44.64 V89.36 a24 8.64 0 0 0 48 0 V44.64"/>
+    <path d="M48 67 a24 8.64 0 0 0 48 0" stroke-opacity="0.54"/>
+  </g></g>
+    <text x="72" y="120" text-anchor="middle" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="8.5" font-style="italic" fill="#3DE05A">pgvector</text>
+  </g>
+</svg>

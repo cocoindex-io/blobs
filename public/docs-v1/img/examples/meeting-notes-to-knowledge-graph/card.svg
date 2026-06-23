@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Meeting notes to knowledge graph — extract people, topics, decisions and action items into Neo4j with entity resolution.">
+  <title>Meeting Notes → Knowledge Graph</title>
+  <defs>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0 H0 V22" fill="none" stroke="#FCF3D8" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3DE05A"/>
+    </marker>
+    <marker id="ahc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#E59A63"/>
+    </marker>
+    <style>
+      .flow{stroke-dasharray:4 6;animation:mv 1.4s linear infinite}
+      @keyframes mv{to{stroke-dashoffset:-20}}
+      .pulse{animation:pl 2.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+      @keyframes pl{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+      .blink{animation:bk 1.05s steps(2,jump-none) infinite}
+      @keyframes bk{50%{opacity:0}}
+      .sq{opacity:.35;animation:sq 2.4s ease-in-out infinite}
+      @keyframes sq{0%,100%{opacity:.3}50%{opacity:1}}
+      .rise{transform-origin:bottom;transform-box:fill-box;animation:rs 3s ease-in-out infinite}
+      @keyframes rs{0%,100%{transform:scaleY(.82)}50%{transform:scaleY(1)}}
+      .drift{animation:df 6s ease-in-out infinite}
+      @keyframes df{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+      @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+    </style>
+  </defs>
+  <rect width="480" height="300" fill="#381E2E"/>
+  <rect width="480" height="300" fill="url(#grid)"/>
+  <g transform="translate(16,14)">
+    <rect width="198.20000000000002" height="24" rx="12" fill="rgba(252,243,216,0.05)" stroke="rgba(252,243,216,0.12)"/>
+    <text x="13" y="12.5" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9.5" letter-spacing="0.13em" font-weight="700" fill="rgba(252,243,216,0.82)">MEETINGS · KNOWLEDGE GRAPH</text>
+  </g>
+  <g transform="translate(354.6,14)">
+    <rect width="109.4" height="24" rx="12" fill="rgba(252,243,216,0.05)" stroke="rgba(252,243,216,0.12)"/>
+    <circle cx="16" cy="12" r="3" fill="#FB6A76"/><circle cx="27" cy="12" r="3" fill="#E59A63"/><circle cx="38" cy="12" r="3" fill="#3DE05A"/>
+    <text x="52" y="12.5" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="10" letter-spacing="0.02em" fill="rgba(252,243,216,0.62)">main.py</text>
+  </g>
+  <g transform="translate(14,82)"><rect x="0" y="0" width="134" height="132" rx="10" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/><text x="12" y="16" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.16em" font-weight="800" fill="#E59A63">📝 NOTES</text>
+    <text x="12" y="36" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="10" font-weight="700" fill="#FCF3D8">Standup · today</text>
+    <g transform="translate(13,50)"><circle cx="6" cy="0" r="6.5" fill="#BE5133"/><text x="6" y="1" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="800" fill="#2A121B">A</text><circle cx="23" cy="0" r="6.5" fill="#BE5133"/><text x="23" y="1" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="7.5" font-weight="800" fill="#2A121B">B</text><text x="36" y="1" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" fill="rgba(252,243,216,0.40)">+3</text></g>
+    <g transform="translate(12,68)" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5">
+      <g><rect width="11" height="11" rx="2.5" fill="#3DE05A"/><path d="M2.5 5.5 L4.5 7.5 L8.5 3" stroke="#2A121B" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="17" y="9" fill="rgba(252,243,216,0.72)">ship Q3</text></g>
+      <g transform="translate(0,16)"><rect width="11" height="11" rx="2.5" fill="none" stroke="rgba(252,243,216,0.40)"/><text x="17" y="9" fill="rgba(252,243,216,0.72)">draft PRD</text></g>
+      <g transform="translate(0,32)"><rect width="11" height="11" rx="2.5" fill="none" stroke="rgba(252,243,216,0.40)"/><text x="17" y="9" fill="rgba(252,243,216,0.72)">hire 2</text></g></g>
+    <text x="12" y="124" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="8" font-style="italic" fill="rgba(252,243,216,0.40)">Google Drive</text></g><path class="flow" d="M150 158 L273 162" stroke="#3DE05A" stroke-width="1.8" fill="none" stroke-linecap="round" marker-end="url(#ah)"/><text x="211.5" y="151" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.12em" font-weight="700" fill="#3DE05A">LLM EXTRACT</text><text x="214" y="178" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="7.5" letter-spacing="0.08em" fill="rgba(252,243,216,0.40)">→ Neo4j</text><g stroke-linecap="round"><path d="M261 78 Q296 164 355 89" fill="none" stroke="#FCF3D8" stroke-opacity="0.1" stroke-width="1"/><path d="M355 89 Q296 164 398 164" fill="none" stroke="#FCF3D8" stroke-opacity="0.1" stroke-width="1"/><path d="M398 164 Q296 164 355 239" fill="none" stroke="#FCF3D8" stroke-opacity="0.1" stroke-width="1"/><path d="M355 239 Q296 164 261 250" fill="none" stroke="#FCF3D8" stroke-opacity="0.1" stroke-width="1"/><path d="M296 164 Q289 117 261 78" fill="none" stroke="#BE5133" stroke-opacity="0.65" stroke-width="1.7" stroke-linecap="round"/><path d="M296 164 Q335 134 355 89" fill="none" stroke="#BE5133" stroke-opacity="0.65" stroke-width="1.7" stroke-linecap="round"/><path d="M296 164 Q347 176 398 164" fill="none" stroke="#C9A0FF" stroke-opacity="0.65" stroke-width="1.7" stroke-linecap="round"/><path d="M296 164 Q317 209 355 239" fill="none" stroke="#3DE05A" stroke-opacity="0.65" stroke-width="1.7" stroke-linecap="round"/><path d="M296 164 Q268 203 261 250" fill="none" stroke="#E59A63" stroke-opacity="0.65" stroke-width="1.7" stroke-linecap="round"/></g><g transform="translate(261,78)"><circle class="pulse" r="12" fill="#BE5133" style="animation-delay:0s"/><text y="1" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#2A121B">A</text></g>
+      <text x="253" y="62" text-anchor="end" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#BE5133">alice</text><g transform="translate(355,89)"><circle class="pulse" r="12" fill="#BE5133" style="animation-delay:0.45s"/><text y="1" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#2A121B">B</text></g>
+      <text x="368" y="75" text-anchor="start" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#BE5133">bob</text><g transform="translate(398,164)"><circle class="pulse" r="12" fill="#C9A0FF" style="animation-delay:0.9s"/><text y="1" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#2A121B">#</text></g>
+      <text x="419" y="167" text-anchor="start" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#C9A0FF">topic</text><g transform="translate(355,239)"><circle class="pulse" r="12" fill="#3DE05A" style="animation-delay:1.35s"/><text y="1" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#2A121B">✓</text></g>
+      <text x="368" y="259" text-anchor="start" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#3DE05A">ship Q3</text><g transform="translate(261,250)"><circle class="pulse" r="12" fill="#E59A63" style="animation-delay:1.8s"/><text y="1" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="11" font-weight="800" fill="#2A121B">→</text></g>
+      <text x="253" y="272" text-anchor="end" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="700" fill="#E59A63">draft PRD</text><g transform="translate(296,164)"><circle r="24" fill="#FCF3D8" opacity="0.12"/><circle r="19" fill="#FCF3D8"/><text y="1" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="10.5" font-weight="800" fill="#2A121B">meet</text></g>
+</svg>
