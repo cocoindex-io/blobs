@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Image search with ColPali — embed images and queries into multi-vector ColPali bags, store in Qdrant, rank with MaxSim.">
+  <title>Image Search with ColPali</title>
+  <defs>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0 H0 V22" fill="none" stroke="#FCF3D8" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3DE05A"/>
+    </marker>
+    <marker id="ahc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#E59A63"/>
+    </marker>
+    <style>
+      .flow{stroke-dasharray:4 6;animation:mv 1.4s linear infinite}
+      @keyframes mv{to{stroke-dashoffset:-20}}
+      .pulse{animation:pl 2.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+      @keyframes pl{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+      .blink{animation:bk 1.05s steps(2,jump-none) infinite}
+      @keyframes bk{50%{opacity:0}}
+      .sq{opacity:.35;animation:sq 2.4s ease-in-out infinite}
+      @keyframes sq{0%,100%{opacity:.3}50%{opacity:1}}
+      .rise{transform-origin:bottom;transform-box:fill-box;animation:rs 3s ease-in-out infinite}
+      @keyframes rs{0%,100%{transform:scaleY(.82)}50%{transform:scaleY(1)}}
+      .drift{animation:df 6s ease-in-out infinite}
+      @keyframes df{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+      @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+    </style>
+  </defs>
+  <rect width="480" height="300" fill="#381E2E"/>
+  <rect width="480" height="300" fill="url(#grid)"/>
+  <g transform="translate(16,14)">
+    <rect width="131.2" height="24" rx="12" fill="rgba(252,243,216,0.05)" stroke="rgba(252,243,216,0.12)"/>
+    <text x="13" y="12.5" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9.5" letter-spacing="0.13em" font-weight="700" fill="rgba(252,243,216,0.82)">IMAGES · COLPALI</text>
+  </g>
+  <g transform="translate(354.6,14)">
+    <rect width="109.4" height="24" rx="12" fill="rgba(252,243,216,0.05)" stroke="rgba(252,243,216,0.12)"/>
+    <circle cx="16" cy="12" r="3" fill="#FB6A76"/><circle cx="27" cy="12" r="3" fill="#E59A63"/><circle cx="38" cy="12" r="3" fill="#3DE05A"/>
+    <text x="52" y="12.5" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="10" letter-spacing="0.02em" fill="rgba(252,243,216,0.62)">main.py</text>
+  </g>
+  <g transform="translate(20,104)"><rect x="0" y="0" width="132" height="130" rx="10" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/><text x="12" y="16" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.16em" font-weight="800" fill="#E59A63">PAGE · IMAGE</text>
+    <g transform="translate(20,26)"><rect width="92" height="74" rx="3" fill="none" stroke="#E59A63" stroke-width="1.4"/><rect x="4" y="4" width="20" height="21" fill="#E59A63" fill-opacity="0.18"/><rect x="4" y="27" width="20" height="21" fill="#E59A63" fill-opacity="0.08"/><rect x="4" y="50" width="20" height="21" fill="#E59A63" fill-opacity="0.18"/><rect x="26" y="4" width="20" height="21" fill="#E59A63" fill-opacity="0.08"/><rect x="26" y="27" width="20" height="21" fill="#E59A63" fill-opacity="0.18"/><rect x="26" y="50" width="20" height="21" fill="#E59A63" fill-opacity="0.08"/><rect x="48" y="4" width="20" height="21" fill="#E59A63" fill-opacity="0.18"/><rect x="48" y="27" width="20" height="21" fill="#E59A63" fill-opacity="0.08"/><rect x="48" y="50" width="20" height="21" fill="#E59A63" fill-opacity="0.18"/><rect x="70" y="4" width="20" height="21" fill="#E59A63" fill-opacity="0.08"/><rect x="70" y="27" width="20" height="21" fill="#E59A63" fill-opacity="0.18"/><rect x="70" y="50" width="20" height="21" fill="#E59A63" fill-opacity="0.08"/></g>
+    <text x="12" y="120" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="8.5" font-style="italic" fill="rgba(252,243,216,0.40)">no OCR · patches</text></g><g transform="translate(166,118)"><text x="32" y="-6" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" font-weight="700" fill="#E59A63">MULTI-VEC</text><path class="flow" d="M0 50 L22 50" stroke="#E59A63" stroke-width="1.8" fill="none" stroke-linecap="round" marker-end="url(#ahc)"/>
+     <rect class="sq" x="34" y="20" width="5" height="60" rx="2" fill="#E59A63" style="animation-delay:0s"/><rect class="sq" x="43" y="20" width="5" height="60" rx="2" fill="#E59A63" style="animation-delay:0.15s"/><rect class="sq" x="52" y="20" width="5" height="60" rx="2" fill="#E59A63" style="animation-delay:0.3s"/><rect class="sq" x="61" y="20" width="5" height="60" rx="2" fill="#E59A63" style="animation-delay:0.44999999999999996s"/><rect class="sq" x="70" y="20" width="5" height="60" rx="2" fill="#E59A63" style="animation-delay:0.6s"/>
+     <path class="flow" d="M88 50 L110 50" stroke="#3DE05A" stroke-width="1.8" fill="none" stroke-linecap="round" marker-end="url(#ah)"/></g><g transform="translate(296,104)"><rect x="0" y="0" width="164" height="130" rx="10" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/><text x="12" y="16" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.16em" font-weight="800" fill="#3DE05A">MAXSIM RANK</text>
+    <g transform="translate(14,34)"><text x="0" y="6" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9" fill="#3DE05A">page 7</text><rect x="56" y="0" width="92" height="9" rx="2" fill="#3DE05A"/></g><g transform="translate(14,58)"><text x="0" y="6" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9" fill="rgba(252,243,216,0.72)">page 2</text><rect x="56" y="0" width="74" height="9" rx="2" fill="rgba(252,243,216,0.2)"/></g><g transform="translate(14,82)"><text x="0" y="6" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9" fill="rgba(252,243,216,0.72)">page 9</text><rect x="56" y="0" width="58" height="9" rx="2" fill="rgba(252,243,216,0.2)"/></g>
+    <text x="14" y="116" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" fill="rgba(252,243,216,0.40)">Qdrant · multivector</text></g>
+</svg>

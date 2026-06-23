@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Multi-codebase summarization — walk many repos, extract structure, LLM-summarize each plus a rolled-up org summary; refreshes on push.">
+  <title>Multi-codebase Summarization</title>
+  <defs>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0 H0 V22" fill="none" stroke="#FCF3D8" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3DE05A"/>
+    </marker>
+    <marker id="ahc" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#E59A63"/>
+    </marker>
+    <style>
+      .flow{stroke-dasharray:4 6;animation:mv 1.4s linear infinite}
+      @keyframes mv{to{stroke-dashoffset:-20}}
+      .pulse{animation:pl 2.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+      @keyframes pl{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+      .blink{animation:bk 1.05s steps(2,jump-none) infinite}
+      @keyframes bk{50%{opacity:0}}
+      .sq{opacity:.35;animation:sq 2.4s ease-in-out infinite}
+      @keyframes sq{0%,100%{opacity:.3}50%{opacity:1}}
+      .rise{transform-origin:bottom;transform-box:fill-box;animation:rs 3s ease-in-out infinite}
+      @keyframes rs{0%,100%{transform:scaleY(.82)}50%{transform:scaleY(1)}}
+      .drift{animation:df 6s ease-in-out infinite}
+      @keyframes df{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+      @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+    </style>
+  </defs>
+  <rect width="480" height="300" fill="#381E2E"/>
+  <rect width="480" height="300" fill="url(#grid)"/>
+  <g transform="translate(16,14)">
+    <rect width="137.9" height="24" rx="12" fill="rgba(252,243,216,0.05)" stroke="rgba(252,243,216,0.12)"/>
+    <text x="13" y="12.5" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9.5" letter-spacing="0.13em" font-weight="700" fill="rgba(252,243,216,0.82)">REPOS · SUMMARIZE</text>
+  </g>
+  <g transform="translate(354.6,14)">
+    <rect width="109.4" height="24" rx="12" fill="rgba(252,243,216,0.05)" stroke="rgba(252,243,216,0.12)"/>
+    <circle cx="16" cy="12" r="3" fill="#FB6A76"/><circle cx="27" cy="12" r="3" fill="#E59A63"/><circle cx="38" cy="12" r="3" fill="#3DE05A"/>
+    <text x="52" y="12.5" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="10" letter-spacing="0.02em" fill="rgba(252,243,216,0.62)">main.py</text>
+  </g>
+  <g transform="translate(20,100)"><text x="0" y="-2" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.16em" font-weight="800" fill="#E59A63">↻ ON PUSH</text><g transform="translate(0,0)">
+     <rect width="120" height="32" rx="7" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/>
+     <text x="12" y="13" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9.5" font-weight="700" fill="#E59A63">▸ sdk-core</text>
+     <text x="12" y="25" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" fill="rgba(252,243,216,0.55)">2.4k files</text>
+   </g><g transform="translate(0,40)">
+     <rect width="120" height="32" rx="7" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/>
+     <text x="12" y="13" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9.5" font-weight="700" fill="#E59A63">▸ web-app</text>
+     <text x="12" y="25" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" fill="rgba(252,243,216,0.55)">1.1k files</text>
+   </g><g transform="translate(0,80)">
+     <rect width="120" height="32" rx="7" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/>
+     <text x="12" y="13" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="9.5" font-weight="700" fill="#E59A63">▸ infra</text>
+     <text x="12" y="25" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" fill="rgba(252,243,216,0.55)">380 files</text>
+   </g></g><g transform="translate(150,150)"><path class="flow" d="M0 0 L40 0" stroke="#BE5133" stroke-width="1.8" fill="none" stroke-linecap="round" marker-end="url(#ahc)"/><text x="20" y="-7" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.12em" font-weight="700" fill="#BE5133">LLM</text><text x="20" y="20" text-anchor="middle" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8" fill="rgba(252,243,216,0.40)">summarize</text></g><g transform="translate(206,102)"><rect x="0" y="0" width="254" height="134" rx="10" fill="rgba(252,243,216,0.07)" stroke="rgba(252,243,216,0.12)"/><text x="12" y="16" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" letter-spacing="0.16em" font-weight="800" fill="#3DE05A">ORG SUMMARY</text>
+    <text x="12" y="40" font-family="'Plus Jakarta Sans','Inter',system-ui,-apple-system,sans-serif" font-size="12" font-weight="700" fill="#FCF3D8">platform overview</text>
+    <rect x="12" y="50" width="210" height="6" rx="3" fill="#FCF3D8" fill-opacity="0.34"/><rect x="12" y="63" width="230" height="6" rx="3" fill="#FCF3D8" fill-opacity="0.30000000000000004"/><rect x="12" y="76" width="180" height="6" rx="3" fill="#FCF3D8" fill-opacity="0.26"/><rect x="12" y="89" width="215" height="6" rx="3" fill="#FCF3D8" fill-opacity="0.22000000000000003"/>
+    <g transform="translate(12,118)"><circle class="pulse" cx="4" cy="0" r="3.2" fill="#3DE05A"/><text x="14" y="0" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" fill="#3DE05A">refreshed · just now</text></g>
+    <text x="242" y="118" text-anchor="end" dominant-baseline="central" font-family="'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace" font-size="8.5" fill="rgba(252,243,216,0.40)">+ mermaid</text>
+  </g>
+</svg>
