@@ -8,15 +8,19 @@ fitted to examples/csv_to_kafka/main.py:
   csv.DictReader, row -> JSON, declare_target_state(key, value)] -> Kafka topic
   (upsert / delete / no-op per row).
 
-Renders:
-  flow-v1.png            full vertical pipeline (hero)
-  stage-process-csv.png  per-file fan-out: one process_csv component per CSV
+Renders (SVG is what the docs page embeds; HTML files are local previews):
+  flow-v1.svg            full vertical pipeline (hero)
+  stage-process-csv.svg  per-file fan-out: one process_csv component per CSV
+
+Everything is vector: text stays live text with a web-safe font stack (Inter /
+JetBrains Mono with system fallbacks), matching the card.svg convention in this
+repo. No @font-face is embedded, so viewers without Inter get the fallback.
 
 The "declare states, not messages" concept diagram and the StreamNative topic
 screenshot are reused from the blog, not generated here.
 
 Usage:
-  python3 gen_diagrams.py            # write HTML
+  python3 gen_diagrams.py            # write SVG + HTML previews
   python3 gen_diagrams.py --render   # also rasterize PNGs via headless Chrome (macOS)
 """
 import pathlib, subprocess, sys
@@ -28,101 +32,18 @@ CREAM = "#FCF3D8"; CREAM_SOFT = "#F6F4E9"
 MAROON = "#532638"; MAROON_INK = "#2A121B"; CORAL = "#BE5133"
 PEACH = "#E59A63"; PALM = "#27E62B"; PALM_INK = "#16A534"
 RULE = "rgba(42,18,27,0.16)"; MUTED = "rgba(42,18,27,0.58)"
-APP_FILL = "color-mix(in oklab, #E59A63 11%, #FCF3D8)"
+# Precomputed color-mix(in oklab, PEACH 11%, CREAM). Kept as a literal because a
+# standalone SVG loaded via <img> must not depend on CSS Color 5 support: an
+# unparsed fill falls back to black, not to the intended tint.
+APP_FILL = "#FAE9CB"
+
+SANS = "Inter, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif"
+MONO = "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace"
 
 GF = ('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&'
       'family=Source+Serif+4:ital,wght@0,400;0,600;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap')
 HEAD = ('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
         f'<link href="{GF}" rel="stylesheet">')
-
-
-# ─────────────────────────── flow (hero) ───────────────────────────
-def node(kind, cap, ttl, sub="", *, mono=True, hl=False):
-    cls = f"node {kind}" + (" hl" if hl else "")
-    sub_html = f'<div class="sub">{sub}</div>' if sub else ""
-    ttlcls = "ttl mono" if mono else "ttl"
-    return (f'<div class="{cls}"><div class="cap">{cap}</div>'
-            f'<div class="{ttlcls}">{ttl}</div>{sub_html}</div>')
-
-
-ARROW = '<div class="arrow"><div class="line"></div><div class="head"></div></div>'
-
-
-def flow_html():
-    return f'''<!doctype html><html><head><meta charset="utf-8">{HEAD}<style>
-*{{margin:0;padding:0;box-sizing:border-box;}}
-html,body{{width:1240px;}}
-body{{background:{CREAM};font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
-  color:{MAROON_INK};padding:48px 60px 40px;display:flex;flex-direction:column;align-items:center;}}
-
-.eyebrow{{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;
-  letter-spacing:.18em;text-transform:uppercase;color:{CORAL};display:flex;align-items:center;gap:12px;margin-bottom:28px;}}
-.eyebrow .dot{{width:12px;height:12px;border-radius:50%;background:{CORAL};}}
-
-.col{{display:flex;flex-direction:column;align-items:center;}}
-.row{{display:flex;gap:30px;align-items:stretch;}}
-
-.node{{background:{CREAM};border:1.8px solid {MAROON};color:{MAROON_INK};
-  padding:16px 30px;text-align:center;min-width:340px;}}
-.row .node{{min-width:0;flex:1;}}
-.node.logic{{border-radius:18px;}}
-.node.data{{border-radius:5px;}}
-.node.target{{border-radius:4px 22px 22px 4px;}}
-.node.hl{{border-color:{PALM_INK};border-width:3px;}}
-.cap{{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:14px;letter-spacing:.14em;
-  text-transform:uppercase;color:{MUTED};margin-bottom:7px;}}
-.ttl{{font-weight:600;font-size:26px;letter-spacing:-.01em;}}
-.ttl.mono{{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;}}
-.sub{{font-size:18px;color:{MUTED};margin-top:7px;line-height:1.35;}}
-
-.arrow{{display:flex;flex-direction:column;align-items:center;height:42px;}}
-.arrow .line{{width:2.6px;flex:1;background:{MAROON};}}
-.arrow .head{{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;
-  border-top:9px solid {MAROON};}}
-
-.comp{{background:color-mix(in oklab,{PEACH} 13%,{CREAM});border:2px solid {CORAL};border-radius:24px;
-  padding:22px 34px 30px;display:flex;flex-direction:column;align-items:center;}}
-.comp-cap{{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;letter-spacing:.08em;
-  text-transform:uppercase;color:{CORAL};margin-bottom:20px;text-align:center;}}
-.comp-cap .reg{{color:{MUTED};text-transform:none;letter-spacing:0;font-weight:500;
-  font-family:'Inter';font-size:17px;}}
-
-.legend{{align-self:stretch;margin-top:38px;display:flex;justify-content:center;gap:34px;flex-wrap:wrap;
-  border-top:1.5px solid {RULE};padding-top:24px;}}
-.lg{{display:flex;align-items:center;gap:12px;font-size:18px;color:{MUTED};}}
-.sw{{width:40px;height:26px;background:{CREAM};border:1.8px solid {MAROON};flex:none;}}
-.sw.logic{{border-radius:13px;}} .sw.data{{border-radius:4px;}}
-.sw.target{{border-radius:3px 13px 13px 3px;}}
-.sw.comp{{background:color-mix(in oklab,{PEACH} 13%,{CREAM});border-color:{CORAL};border-radius:8px;}}
-</style></head><body>
-  <div class="eyebrow"><span class="dot"></span>CocoIndex &middot; CSV &rarr; Kafka flow</div>
-
-  <div class="col">
-    {node("logic", "Source", "localfs.walk_dir (live)", "./data &middot; *.csv &middot; watched with watchfiles")}
-    {ARROW}
-    {node("data", "Data", "files", "one File per CSV")}
-    {ARROW}
-
-    <div class="comp">
-      <div class="comp-cap">Processing Component &middot; <span class="reg">mount_each &rarr; process_csv (per file, memoized)</span></div>
-      <div class="col">
-        {node("logic", "Transform &middot; row &rarr; JSON", "csv.DictReader", "key = first column &middot; value = json.dumps(row)")}
-        {ARROW}
-        {node("target", "Target state &middot; one per row", "Kafka topic", "declare_target_state(key, value)")}
-      </div>
-    </div>
-
-    {ARROW}
-    {node("logic", "Target", "Kafka", "topic &middot; upsert / delete / no-op per row")}
-  </div>
-
-  <div class="legend">
-    <div class="lg"><span class="sw logic"></span>Source / transform</div>
-    <div class="lg"><span class="sw data"></span>Data (state)</div>
-    <div class="lg"><span class="sw target"></span>Target state</div>
-    <div class="lg"><span class="sw comp"></span>Processing component</div>
-  </div>
-</body></html>'''
 
 
 # ─────────────────────────── SVG helpers ───────────────────────────
@@ -131,7 +52,7 @@ def _stroke(base, hl):
 
 
 def tlines(cx, cy, lines, size, weight=600, color=MAROON_INK, mono=False):
-    fam = "'JetBrains Mono', monospace" if mono else "Inter, sans-serif"
+    fam = MONO if mono else SANS
     lh = size * 1.16
     y0 = cy - lh * (len(lines) - 1) / 2
     spans = "".join(
@@ -236,41 +157,184 @@ def stage_svg():
     return W, H, "".join(s)
 
 
-def page(w, h, body):
+# ─────────────────────────── flow (hero), as SVG ───────────────────────────
+# Vector port of the previous flow.html: same vertical pipeline, same shape
+# language (rounded = logic, square-ish = data, flag = target state,
+# peach = component).
+
+def _shape(kind, x, y, w, h, st, sw):
+    if kind == "logic":
+        return (f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="18" '
+                f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>')
+    if kind == "data":
+        return (f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="5" '
+                f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>')
+    # target state: flag shape, rounded on the trailing edge. The radius is
+    # clamped so the small legend swatch keeps the same silhouette.
+    rl, rr = 4, min(22, h / 2)
+    d = (f"M {x+rl:.0f} {y:.0f} L {x+w-rr:.0f} {y:.0f} A {rr} {rr} 0 0 1 {x+w:.0f} {y+rr:.0f} "
+         f"L {x+w:.0f} {y+h-rr:.0f} A {rr} {rr} 0 0 1 {x+w-rr:.0f} {y+h:.0f} "
+         f"L {x+rl:.0f} {y+h:.0f} A {rl} {rl} 0 0 1 {x:.0f} {y+h-rl:.0f} "
+         f"L {x:.0f} {y+rl:.0f} A {rl} {rl} 0 0 1 {x+rl:.0f} {y:.0f} Z")
+    return f'<path d="{d}" fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
+
+
+def _text(cx, y, text, *, size, weight=600, color=MAROON_INK, mono=False, track=None):
+    ls = f' letter-spacing="{track}"' if track else ""
+    return (f'<text x="{cx:.0f}" y="{y:.0f}" text-anchor="middle" dominant-baseline="central" '
+            f'font-family="{MONO if mono else SANS}" font-size="{size}" '
+            f'font-weight="{weight}" fill="{color}"{ls}>{text}</text>')
+
+
+FNODE_H = 104
+
+
+def fnode(cx, y, w, kind, cap, ttl, sub="", *, mono=True, h=FNODE_H, hl=False):
+    x = cx - w / 2
+    st, sw = (PALM_INK, 3) if hl else (MAROON, 1.8)
+    s = [_shape(kind, x, y, w, h, st, sw)]
+    s.append(_text(cx, y + 26, cap.upper(), size=14, color=MUTED, mono=True, track="1.9"))
+    s.append(_text(cx, y + h / 2 + 4, ttl, size=24 if mono else 26, mono=mono))
+    if sub:
+        s.append(_text(cx, y + h - 20, sub, size=18, weight=400, color=MUTED))
+    return "".join(s)
+
+
+def vdown(cx, y, length=42):
+    """Vertical connector with a solid arrowhead, matching the CSS version."""
+    y2 = y + length
+    return (f'<line x1="{cx:.0f}" y1="{y:.0f}" x2="{cx:.0f}" y2="{y2-9:.0f}" '
+            f'stroke="{MAROON}" stroke-width="2.6"/>'
+            f'<path d="M {cx-7:.0f} {y2-9:.0f} L {cx+7:.0f} {y2-9:.0f} L {cx:.0f} {y2:.0f} Z" '
+            f'fill="{MAROON}"/>')
+
+
+def fcomp(cx, y, w, h, cap_mono, cap_reg):
+    x = cx - w / 2
+    return ("".join([
+        f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="24" '
+        f'fill="{APP_FILL}" stroke="{CORAL}" stroke-width="2"/>',
+        _text(cx, y + 32, cap_mono.upper(), size=16, color=CORAL, mono=True, track="1.3"),
+        _text(cx, y + 58, cap_reg, size=17, weight=500, color=MUTED),
+    ]))
+
+
+VGAP = 42          # arrow length
+COMP_PAD_T = 82    # component top pad through both caption lines
+COMP_PAD_B = 30
+COMP_PAD_X = 34
+
+
+def flow_svg():
+    W = 1240
+    CX = W / 2
+    COMP_W = W - 120
+    NODE_W = 760
+    INNER_W = COMP_W - 2 * COMP_PAD_X
+
+    # Component height: caption block + stacked content + bottom pad.
+    COMP_H = COMP_PAD_T + FNODE_H + VGAP + FNODE_H + COMP_PAD_B
+
+    s = [DEFS]
+    y = 48
+
+    # eyebrow
+    s.append(f'<circle cx="60" cy="{y+11}" r="6" fill="{CORAL}"/>')
+    s.append(f'<text x="82" y="{y+11}" dominant-baseline="central" font-family="{MONO}" '
+             f'font-size="21" font-weight="600" fill="{CORAL}" letter-spacing="3.8">'
+             f'COCOINDEX · CSV → KAFKA FLOW</text>')
+    y += 30 + 28
+
+    s.append(fnode(CX, y, NODE_W, "logic", "Source", "localfs.walk_dir (live)",
+                   "./data · *.csv · watched with watchfiles"))
+    y += FNODE_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    s.append(fnode(CX, y, NODE_W, "data", "Data", "files", "one File per CSV"))
+    y += FNODE_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    # ── processing component ──
+    s.append(fcomp(CX, y, COMP_W, COMP_H, "Processing component",
+                   "mount_each → process_csv (per file, memoized)"))
+    iy = y + COMP_PAD_T
+    s.append(fnode(CX, iy, INNER_W, "logic", "Transform · row → JSON",
+                   "csv.DictReader",
+                   "key = first column · value = json.dumps(row)"))
+    iy += FNODE_H
+    s.append(vdown(CX, iy)); iy += VGAP
+    s.append(fnode(CX, iy, INNER_W, "target", "Target state · one per row",
+                   "Kafka topic", "declare_target_state(key, value)"))
+    y += COMP_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    s.append(fnode(CX, y, NODE_W, "logic", "Target", "Kafka",
+                   "topic · upsert / delete / no-op per row"))
+    y += FNODE_H
+
+    # ── legend ──
+    y += 38
+    s.append(f'<line x1="60" y1="{y}" x2="{W-60}" y2="{y}" stroke="{RULE}" stroke-width="1.5"/>')
+    y += 24
+    items = [("logic", "Source / transform"), ("data", "Data (state)"),
+             ("target", "Target state"), ("comp", "Processing component")]
+    widths = [40 + 12 + len(label) * 8.9 for _, label in items]
+    total = sum(widths) + 34 * (len(items) - 1)
+    lx = CX - total / 2
+    for (kind, label), iw in zip(items, widths):
+        if kind == "comp":
+            s.append(f'<rect x="{lx:.0f}" y="{y:.0f}" width="40" height="26" rx="8" '
+                     f'fill="{APP_FILL}" stroke="{CORAL}" stroke-width="1.8"/>')
+        else:
+            s.append(_shape(kind, lx, y, 40, 26, MAROON, 1.8))
+        s.append(f'<text x="{lx+52:.0f}" y="{y+13}" dominant-baseline="central" '
+                 f'font-family="{SANS}" font-size="18" font-weight="400" fill="{MUTED}">'
+                 f'{label}</text>')
+        lx += iw + 34
+    y += 26 + 40
+
+    return W, int(y), "".join(s)
+
+
+def svg_file(w, h, body, *, pad=34):
+    """Standalone SVG: cream plate, padded content, no external assets."""
+    ow, oh = w + 2 * pad, h + 2 * pad
+    inner = f'<g transform="translate({pad},{pad})">{body}</g>' if pad else body
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{ow}" height="{oh}" '
+            f'viewBox="0 0 {ow} {oh}" role="img">'
+            f'<rect width="{ow}" height="{oh}" fill="{CREAM}"/>{inner}</svg>')
+
+
+def page(w, h, body, *, pad=34):
     return (f'<!doctype html><html><head><meta charset="utf-8">'
             f'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
             f'<link href="{GF}" rel="stylesheet"><style>'
             f'*{{margin:0;padding:0;box-sizing:border-box}}'
-            f'body{{background:{CREAM};padding:34px}}'
+            f'body{{background:{CREAM};padding:{pad}px}}'
             f'svg{{display:block}}</style></head><body>'
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
             f'viewBox="0 0 {w} {h}">{body}</svg></body></html>')
 
 
 # ─────────────────────────── render all ───────────────────────────
-(OUT_DIR / "flow.html").write_text(flow_html())
-print("wrote flow.html")
-
-SVG_DIAGRAMS = {
-    "stage-process-csv": stage_svg,
+DIAGRAMS = {
+    "flow-v1": (flow_svg, 0),
+    "stage-process-csv": (stage_svg, 34),
 }
-svg_sizes = {}
-for name, fn in SVG_DIAGRAMS.items():
+
+sizes = {}
+for name, (fn, pad) in DIAGRAMS.items():
     w, h, body = fn()
-    (OUT_DIR / f"{name}.html").write_text(page(w, h, body))
-    svg_sizes[name] = (w + 68, h + 68)
-    print(f"wrote {name}.html")
+    (OUT_DIR / f"{name}.svg").write_text(svg_file(w, h, body, pad=pad))
+    # HTML preview: same SVG, plus the webfont links so a local browser shows
+    # the intended Inter / JetBrains Mono rendering.
+    (OUT_DIR / f"{name}.html").write_text(page(w, h, body, pad=pad))
+    sizes[name] = (w + 2 * pad, h + 2 * pad)
+    print(f"wrote {name}.svg + {name}.html")
 
 if "--render" in sys.argv:
     chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    subprocess.run([
-        chrome, "--headless=new", "--hide-scrollbars", "--no-sandbox",
-        "--force-color-profile=srgb", "--virtual-time-budget=8000",
-        f"--screenshot={OUT_DIR / 'flow-v1.png'}", "--window-size=1240,1120",
-        (OUT_DIR / "flow.html").as_uri(),
-    ], check=True)
-    print("rendered flow-v1.png")
-    for name, (ww, hh) in svg_sizes.items():
+    for name, (ww, hh) in sizes.items():
         subprocess.run([
             chrome, "--headless=new", "--hide-scrollbars", "--no-sandbox",
             "--force-color-profile=srgb", "--virtual-time-budget=8000",
