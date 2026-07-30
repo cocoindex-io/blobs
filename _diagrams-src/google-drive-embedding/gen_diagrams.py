@@ -7,12 +7,17 @@ examples/gdrive_text_embedding/main.py:
   memoized): RecursiveSplitter(markdown) -> coco.map _emit_chunk: embed
   -> declare_row(DocEmbedding)] -> Postgres (pgvector, sequential scan).
 
-Renders:
-  cover.png              social/hero cover
-  flow-v1.png            full vertical pipeline (hero)
+Renders (light variant — cover + flow only, no stage diagrams):
+  cover.png     social/hero cover (raster, used as og:image)
+  flow-v1.svg   full vertical pipeline (hero) — what the docs page embeds
+  flow-v1.html  local preview of the same SVG with webfonts
+
+Everything in the flow is vector: text stays live text with a web-safe font
+stack (Inter / JetBrains Mono with system fallbacks), matching the card.svg
+convention in this repo. No @font-face is embedded.
 
 Usage:
-  python3 gen_diagrams.py            # write HTML
+  python3 gen_diagrams.py            # write SVG + HTML previews
   python3 gen_diagrams.py --render   # also rasterize PNGs via headless Chrome (macOS)
 """
 import pathlib, subprocess, sys
@@ -24,7 +29,15 @@ CREAM = "#FCF3D8"; CREAM_SOFT = "#F6F4E9"
 MAROON = "#532638"; MAROON_INK = "#2A121B"; CORAL = "#BE5133"
 PEACH = "#E59A63"; PALM = "#27E62B"; PALM_INK = "#16A534"
 RULE = "rgba(42,18,27,0.16)"; MUTED = "rgba(42,18,27,0.58)"
-APP_FILL = "color-mix(in oklab, #E59A63 11%, #FCF3D8)"
+# Precomputed color-mix(in oklab, PEACH 11%, CREAM). Kept as a literal because a
+# standalone SVG loaded via <img> must not depend on CSS Color 5 support: an
+# unparsed fill falls back to black, not to the intended tint.
+APP_FILL = "#FAE9CB"
+# Precomputed color-mix(in oklab, CORAL 60%, transparent) over CREAM_SOFT.
+SUB_STROKE = "#D28D6F"
+
+SANS = "Inter, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif"
+MONO = "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace"
 
 GF = ('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&'
       'family=Source+Serif+4:ital,wght@0,400;0,600;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap')
@@ -67,177 +80,177 @@ h1 em{{font-style:italic;color:{CORAL};}}
 </body></html>'''
 
 
-# ─────────────────────────── flow (hero) ───────────────────────────
-def node(kind, cap, ttl, sub="", *, mono=True, hl=False):
-    cls = f"node {kind}" + (" hl" if hl else "")
-    sub_html = f'<div class="sub">{sub}</div>' if sub else ""
-    ttlcls = "ttl mono" if mono else "ttl"
-    return (f'<div class="{cls}"><div class="cap">{cap}</div>'
-            f'<div class="{ttlcls}">{ttl}</div>{sub_html}</div>')
+# ─────────────────────────── flow (hero), as SVG ───────────────────────────
+# Vector port of the previous flow.html: same vertical pipeline, same shape
+# language (rounded = logic, square-ish = data, flag = target state,
+# peach = component, dashed = per-chunk sub-component).
+
+def _shape(kind, x, y, w, h, st, sw):
+    if kind == "logic":
+        return (f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="18" '
+                f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>')
+    if kind == "data":
+        return (f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="5" '
+                f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>')
+    # target state: flag shape, rounded on the trailing edge. The radius is
+    # clamped so the small legend swatch keeps the same silhouette.
+    rl, rr = 4, min(22, h / 2)
+    d = (f"M {x+rl:.0f} {y:.0f} L {x+w-rr:.0f} {y:.0f} A {rr} {rr} 0 0 1 {x+w:.0f} {y+rr:.0f} "
+         f"L {x+w:.0f} {y+h-rr:.0f} A {rr} {rr} 0 0 1 {x+w-rr:.0f} {y+h:.0f} "
+         f"L {x+rl:.0f} {y+h:.0f} A {rl} {rl} 0 0 1 {x:.0f} {y+h-rl:.0f} "
+         f"L {x:.0f} {y+rl:.0f} A {rl} {rl} 0 0 1 {x+rl:.0f} {y:.0f} Z")
+    return f'<path d="{d}" fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
 
 
-ARROW = '<div class="arrow"><div class="line"></div><div class="head"></div></div>'
+def _text(cx, y, text, *, size, weight=600, color=MAROON_INK, mono=False, track=None):
+    ls = f' letter-spacing="{track}"' if track else ""
+    return (f'<text x="{cx:.0f}" y="{y:.0f}" text-anchor="middle" dominant-baseline="central" '
+            f'font-family="{MONO if mono else SANS}" font-size="{size}" '
+            f'font-weight="{weight}" fill="{color}"{ls}>{text}</text>')
 
 
-def flow_html():
-    return f'''<!doctype html><html><head><meta charset="utf-8">{HEAD}<style>
-*{{margin:0;padding:0;box-sizing:border-box;}}
-html,body{{width:1240px;}}
-body{{background:{CREAM};font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
-  color:{MAROON_INK};padding:48px 60px 40px;display:flex;flex-direction:column;align-items:center;}}
-
-.eyebrow{{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;
-  letter-spacing:.18em;text-transform:uppercase;color:{CORAL};display:flex;align-items:center;gap:12px;margin-bottom:28px;}}
-.eyebrow .dot{{width:12px;height:12px;border-radius:50%;background:{CORAL};}}
-
-.col{{display:flex;flex-direction:column;align-items:center;}}
-
-.node{{background:{CREAM};border:1.8px solid {MAROON};color:{MAROON_INK};
-  padding:16px 30px;text-align:center;min-width:320px;}}
-.node.logic{{border-radius:18px;}}
-.node.data{{border-radius:5px;}}
-.node.target{{border-radius:4px 22px 22px 4px;}}
-.node.hl{{border-color:{PALM_INK};border-width:3px;}}
-.cap{{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:14px;letter-spacing:.14em;
-  text-transform:uppercase;color:{MUTED};margin-bottom:7px;}}
-.ttl{{font-weight:600;font-size:26px;letter-spacing:-.01em;}}
-.ttl.mono{{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:23px;}}
-.sub{{font-size:18px;color:{MUTED};margin-top:7px;line-height:1.35;}}
-
-.arrow{{display:flex;flex-direction:column;align-items:center;height:42px;}}
-.arrow .line{{width:2.6px;flex:1;background:{MAROON};}}
-.arrow .head{{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;
-  border-top:9px solid {MAROON};}}
-
-.comp{{background:color-mix(in oklab,{PEACH} 13%,{CREAM});border:2px solid {CORAL};border-radius:24px;
-  padding:22px 34px 30px;display:flex;flex-direction:column;align-items:center;}}
-.comp-cap{{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:16px;letter-spacing:.08em;
-  text-transform:uppercase;color:{CORAL};margin-bottom:20px;text-align:center;}}
-.comp-cap .reg{{color:{MUTED};text-transform:none;letter-spacing:0;font-weight:500;
-  font-family:'Inter';font-size:17px;}}
-
-.subcomp{{background:{CREAM_SOFT};border:1.8px dashed color-mix(in oklab,{CORAL} 60%,transparent);
-  border-radius:20px;padding:18px 28px 24px;display:flex;flex-direction:column;align-items:center;}}
-.subcomp-cap{{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:14px;letter-spacing:.06em;
-  text-transform:uppercase;color:{MUTED};margin-bottom:16px;text-align:center;}}
-
-.legend{{align-self:stretch;margin-top:38px;display:flex;justify-content:center;gap:34px;flex-wrap:wrap;
-  border-top:1.5px solid {RULE};padding-top:24px;}}
-.lg{{display:flex;align-items:center;gap:12px;font-size:18px;color:{MUTED};}}
-.sw{{width:40px;height:26px;background:{CREAM};border:1.8px solid {MAROON};flex:none;}}
-.sw.logic{{border-radius:13px;}} .sw.data{{border-radius:4px;}}
-.sw.target{{border-radius:3px 13px 13px 3px;}}
-.sw.comp{{background:color-mix(in oklab,{PEACH} 13%,{CREAM});border-color:{CORAL};border-radius:8px;}}
-</style></head><body>
-  <div class="eyebrow"><span class="dot"></span>CocoIndex &middot; Google Drive embedding flow</div>
-
-  <div class="col">
-    {node("logic", "Source", "GoogleDriveSource", "Drive folders &middot; Docs/Sheets/Slides exported to text")}
-    {ARROW}
-    {node("data", "Data", "source.items()", "one DriveFile per document")}
-    {ARROW}
-
-    <div class="comp">
-      <div class="comp-cap">Processing Component &middot; <span class="reg">mount_each &rarr; process_file (per file, memoized)</span></div>
-      <div class="col">
-        {node("logic", "Transform &middot; Markdown", "RecursiveSplitter", "split into overlapping chunks (2000 / 500)")}
-        {ARROW}
-        {node("data", "Data", "chunks", "Chunk &middot; text, char offsets")}
-        {ARROW}
-        <div class="subcomp">
-          <div class="subcomp-cap">coco.map &rarr; _emit_chunk (per chunk)</div>
-          <div class="col">
-            {node("logic", "Transform", "SentenceTransformerEmbedder.embed", "chunk text &rarr; embedding (384-d vector)")}
-            {ARROW}
-            {node("target", "Target state", "declare_row &rarr; DocEmbedding", "id &middot; filename &middot; text &middot; embedding")}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {ARROW}
-    {node("logic", "Target", "Postgres &middot; pgvector", "doc_embeddings table &middot; sequential scan")}
-  </div>
-
-  <div class="legend">
-    <div class="lg"><span class="sw logic"></span>Source / transform</div>
-    <div class="lg"><span class="sw data"></span>Data (state)</div>
-    <div class="lg"><span class="sw target"></span>Target state</div>
-    <div class="lg"><span class="sw comp"></span>Processing component</div>
-  </div>
-</body></html>'''
+FNODE_H = 104
 
 
-# ─────────────────────────── stages (SVG) ───────────────────────────
-def _stroke(base, hl):
-    return (PALM, 4.0) if hl else base
-
-
-def tlines(cx, cy, lines, size, weight=600, color=MAROON_INK, mono=False):
-    fam = "'JetBrains Mono', monospace" if mono else "Inter, sans-serif"
-    lh = size * 1.16
-    y0 = cy - lh * (len(lines) - 1) / 2
-    spans = "".join(
-        f'<tspan x="{cx}" y="{y0 + i*lh:.1f}">{t}</tspan>' for i, t in enumerate(lines))
-    return (f'<text text-anchor="middle" dominant-baseline="central" '
-            f'font-family="{fam}" font-size="{size}" font-weight="{weight}" '
-            f'fill="{color}">{spans}</text>')
-
-
-def logic(x, y, w, h, lines, *, hl=False, size=26, mono=False, sub=None):
-    st, sw = _stroke((MAROON, 2.4), hl)
-    body = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" '
-            f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>')
+def fnode(cx, y, w, kind, cap, ttl, sub="", *, mono=True, h=FNODE_H):
+    x = cx - w / 2
+    s = [_shape(kind, x, y, w, h, MAROON, 1.8)]
+    s.append(_text(cx, y + 26, cap.upper(), size=14, color=MUTED, mono=True, track="1.9"))
+    s.append(_text(cx, y + h / 2 + 4, ttl, size=24 if mono else 26, mono=mono))
     if sub:
-        body += tlines(x + w/2, y + h/2 - 12, lines, size, mono=mono)
-        body += tlines(x + w/2, y + h/2 + 22, [sub], 19, weight=500, color=MUTED)
-    else:
-        body += tlines(x + w/2, y + h/2, lines, size, mono=mono)
-    return body
+        s.append(_text(cx, y + h - 20, sub, size=18, weight=400, color=MUTED))
+    return "".join(s)
 
 
-def data(x, y, w, h, lines, *, hl=False, size=23, mono=True):
-    st, sw = _stroke((MAROON, 2.4), hl)
-    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="5" '
-            f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
-            + tlines(x + w/2, y + h/2, lines, size, mono=mono))
+def vdown(cx, y, length=42):
+    """Vertical connector with a solid arrowhead, matching the CSS version."""
+    y2 = y + length
+    return (f'<line x1="{cx:.0f}" y1="{y:.0f}" x2="{cx:.0f}" y2="{y2-9:.0f}" '
+            f'stroke="{MAROON}" stroke-width="2.6"/>'
+            f'<path d="M {cx-7:.0f} {y2-9:.0f} L {cx+7:.0f} {y2-9:.0f} L {cx:.0f} {y2:.0f} Z" '
+            f'fill="{MAROON}"/>')
 
 
-def bullet(x, y, w, h, lines, *, hl=False, size=21):
-    st, sw = _stroke((MAROON, 2.4), hl)
-    r = h / 2
-    d = f"M {x} {y} L {x+w-r} {y} A {r} {r} 0 0 1 {x+w-r} {y+h} L {x} {y+h} Z"
-    return (f'<path d="{d}" fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
-            + tlines(x + (w-r)/2 + 2, y + h/2, lines, size, mono=True))
+def fcomp(cx, y, w, h, cap_mono, cap_reg):
+    x = cx - w / 2
+    return ("".join([
+        f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="24" '
+        f'fill="{APP_FILL}" stroke="{CORAL}" stroke-width="2"/>',
+        _text(cx, y + 32, cap_mono.upper(), size=16, color=CORAL, mono=True, track="1.3"),
+        _text(cx, y + 58, cap_reg, size=17, weight=500, color=MUTED),
+    ]))
 
 
-def app(x, y, w, h, label, *, hl=False):
-    st, sw = _stroke((CORAL, 2.6), hl)
-    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" '
-            f'fill="{APP_FILL}" stroke="{st}" stroke-width="{sw}"/>'
-            + tlines(x + w/2, y + 26, [label], 19, weight=600, color=CORAL, mono=True))
+def fsubcomp(cx, y, w, h, cap):
+    x = cx - w / 2
+    return ("".join([
+        f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="20" '
+        f'fill="{CREAM_SOFT}" stroke="{SUB_STROKE}" stroke-width="1.8" '
+        f'stroke-dasharray="8 7"/>',
+        _text(cx, y + 30, cap.upper(), size=14, color=MUTED, mono=True, track="1.1"),
+    ]))
 
 
-def pc(x, y, w, h, label, *, hl=False):
-    st, sw = _stroke((MAROON, 2.2), hl)
-    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="11" '
-            f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
-            + tlines(x + w/2, y + 24, [label], 18, weight=600, color=MUTED, mono=True))
+VGAP = 42          # arrow length
+COMP_PAD_T = 82    # component top pad through both caption lines
+COMP_PAD_B = 30
+COMP_PAD_X = 34
+SUB_PAD_T = 56     # sub-component top pad through its single caption line
+SUB_PAD_B = 26
+SUB_PAD_X = 28
 
 
-def arrow(x1, y, x2):
-    return (f'<line x1="{x1}" y1="{y}" x2="{x2-11}" y2="{y}" stroke="{MAROON}" '
-            f'stroke-width="2.6" marker-end="url(#ah)"/>')
+def flow_svg():
+    W = 1240
+    CX = W / 2
+    COMP_W = W - 120
+    NODE_W = 760
+    INNER_W = COMP_W - 2 * COMP_PAD_X
+    SUB_W = INNER_W
+    SUB_INNER_W = SUB_W - 2 * SUB_PAD_X
+
+    SUB_H = SUB_PAD_T + FNODE_H + VGAP + FNODE_H + SUB_PAD_B
+    COMP_H = COMP_PAD_T + FNODE_H + VGAP + FNODE_H + VGAP + SUB_H + COMP_PAD_B
+
+    s = []
+    y = 48
+
+    # eyebrow
+    s.append(f'<circle cx="60" cy="{y+11}" r="6" fill="{CORAL}"/>')
+    s.append(f'<text x="82" y="{y+11}" dominant-baseline="central" font-family="{MONO}" '
+             f'font-size="21" font-weight="600" fill="{CORAL}" letter-spacing="3.8">'
+             f'COCOINDEX · GOOGLE DRIVE EMBEDDING FLOW</text>')
+    y += 30 + 28
+
+    s.append(fnode(CX, y, NODE_W, "logic", "Source", "GoogleDriveSource",
+                   "Drive folders · Docs/Sheets/Slides exported to text"))
+    y += FNODE_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    s.append(fnode(CX, y, NODE_W, "data", "Data", "source.items()", "one DriveFile per document"))
+    y += FNODE_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    # ── processing component ──
+    s.append(fcomp(CX, y, COMP_W, COMP_H, "Processing component",
+                   "mount_each → process_file (per file, memoized)"))
+    iy = y + COMP_PAD_T
+    s.append(fnode(CX, iy, INNER_W, "logic", "Transform · Markdown", "RecursiveSplitter",
+                   "split into overlapping chunks (2000 / 500)"))
+    iy += FNODE_H
+    s.append(vdown(CX, iy)); iy += VGAP
+    s.append(fnode(CX, iy, INNER_W, "data", "Data", "chunks", "Chunk · text, char offsets"))
+    iy += FNODE_H
+    s.append(vdown(CX, iy)); iy += VGAP
+
+    s.append(fsubcomp(CX, iy, SUB_W, SUB_H, "coco.map → _emit_chunk (per chunk)"))
+    sy = iy + SUB_PAD_T
+    s.append(fnode(CX, sy, SUB_INNER_W, "logic", "Transform",
+                   "SentenceTransformerEmbedder.embed",
+                   "chunk text → embedding (384-d vector)"))
+    sy += FNODE_H
+    s.append(vdown(CX, sy)); sy += VGAP
+    s.append(fnode(CX, sy, SUB_INNER_W, "target", "Target state",
+                   "declare_row → DocEmbedding",
+                   "id · filename · text · embedding"))
+    y += COMP_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    s.append(fnode(CX, y, NODE_W, "logic", "Target", "Postgres · pgvector",
+                   "doc_embeddings table · sequential scan", mono=False))
+    y += FNODE_H
+
+    # ── legend ──
+    y += 38
+    s.append(f'<line x1="60" y1="{y}" x2="{W-60}" y2="{y}" stroke="{RULE}" stroke-width="1.5"/>')
+    y += 24
+    items = [("logic", "Source / transform"), ("data", "Data (state)"),
+             ("target", "Target state"), ("comp", "Processing component")]
+    widths = [40 + 12 + len(label) * 8.9 for _, label in items]
+    total = sum(widths) + 34 * (len(items) - 1)
+    lx = CX - total / 2
+    for (kind, label), iw in zip(items, widths):
+        if kind == "comp":
+            s.append(f'<rect x="{lx:.0f}" y="{y:.0f}" width="40" height="26" rx="8" '
+                     f'fill="{APP_FILL}" stroke="{CORAL}" stroke-width="1.8"/>')
+        else:
+            s.append(_shape(kind, lx, y, 40, 26, MAROON, 1.8))
+        s.append(f'<text x="{lx+52:.0f}" y="{y+13}" dominant-baseline="central" '
+                 f'font-family="{SANS}" font-size="18" font-weight="400" fill="{MUTED}">'
+                 f'{label}</text>')
+        lx += iw + 34
+    y += 26 + 40
+
+    return W, int(y), "".join(s)
 
 
-def bind(x1, y, x2):
-    return (f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{MAROON}" '
-            f'stroke-width="2.4" stroke-dasharray="7 6"/>')
-
-
-DEFS = (f'<defs><marker id="ah" markerWidth="13" markerHeight="12" refX="10" refY="4" '
-        f'orient="auto" markerUnits="userSpaceOnUse">'
-        f'<path d="M0 0 L11 4 L0 8 Z" fill="{MAROON}"/></marker></defs>')
+def svg_file(w, h, body, *, pad=0):
+    """Standalone SVG: cream plate, padded content, no external assets."""
+    ow, oh = w + 2 * pad, h + 2 * pad
+    inner = f'<g transform="translate({pad},{pad})">{body}</g>' if pad else body
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{ow}" height="{oh}" '
+            f'viewBox="0 0 {ow} {oh}" role="img">'
+            f'<rect width="{ow}" height="{oh}" fill="{CREAM}"/>{inner}</svg>')
 
 
 def page(w, h, body):
@@ -245,17 +258,20 @@ def page(w, h, body):
             f'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
             f'<link href="{GF}" rel="stylesheet"><style>'
             f'*{{margin:0;padding:0;box-sizing:border-box}}'
-            f'body{{background:{CREAM};padding:34px}}'
+            f'body{{background:{CREAM}}}'
             f'svg{{display:block}}</style></head><body>'
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
             f'viewBox="0 0 {w} {h}">{body}</svg></body></html>')
 
 
-# ─────────────────────────── render all ───────────────────────────
+# ─────────────────────────── render ───────────────────────────
 (OUT_DIR / "cover.html").write_text(cover_html())
 print("wrote cover.html")
-(OUT_DIR / "flow.html").write_text(flow_html())
-print("wrote flow.html")
+
+fw, fh, fbody = flow_svg()
+(OUT_DIR / "flow-v1.svg").write_text(svg_file(fw, fh, fbody))
+(OUT_DIR / "flow-v1.html").write_text(page(fw, fh, fbody))
+print("wrote flow-v1.svg + flow-v1.html")
 
 if "--render" in sys.argv:
     chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
@@ -269,7 +285,7 @@ if "--render" in sys.argv:
     subprocess.run([
         chrome, "--headless=new", "--hide-scrollbars", "--no-sandbox",
         "--force-color-profile=srgb", "--virtual-time-budget=8000",
-        f"--screenshot={OUT_DIR / 'flow-v1.png'}", "--window-size=1240,1560",
-        (OUT_DIR / "flow.html").as_uri(),
+        f"--screenshot={OUT_DIR / 'flow-v1.png'}", f"--window-size={fw},{fh}",
+        (OUT_DIR / "flow-v1.html").as_uri(),
     ], check=True)
     print("rendered flow-v1.png")
