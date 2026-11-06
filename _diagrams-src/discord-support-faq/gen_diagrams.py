@@ -147,7 +147,7 @@ def phase1_svg():
     s.append(app(APP_X, APP_Y, APP_W, APP_H, "CocoIndex App"))
 
     rows = [
-        (182, ["Uploads from my", "phone stall at 99%"], ["Post ⟶ ② ③"]),
+        (182, ["Uploads from my", "phone stall at 99%"], ["Post", "for phases 2 and 3"]),
         (372, ["Show us your setup"], ["None", "asks nothing"]),
     ]
     for cy, title, out in rows:
@@ -194,7 +194,7 @@ def phase2_svg():
     s.append(logic(xfm_x, CY - XFM_H/2, XFM_W, XFM_H,
                    ["Embed + LLM resolve"], size=23, sub="MiniLM · LlmPairResolver"))
     s.append(arrow(xfm_x + XFM_W, CY, out_x))
-    s.append(data(out_x, CY - 33, OUT_W, 66, ["ResolvedEntities", "canonical map ⟶ ③"], size=18))
+    s.append(data(out_x, CY - 33, OUT_W, 66, ["ResolvedEntities", "canonical map for phase 3"], size=17))
     return W, H, "".join(s)
 
 
