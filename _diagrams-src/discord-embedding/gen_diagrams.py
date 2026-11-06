@@ -1,0 +1,389 @@
+#!/usr/bin/env python3
+"""V1 diagrams for the `discord-embedding` example.
+
+Adapted from _diagrams-src/text-embedding/gen_diagrams.py, fitted to
+examples/discord_text_embedding/main.py:
+  DiscordChannel (per channel ID) -> items() -> [process_item (per item,
+  memoized): skip system notices; read_text -> RecursiveSplitter(markdown)
+  -> coco.map _emit_chunk: embed -> declare_row(ChunkEmbedding)]
+  -> Postgres/pgvector.
+
+Renders (SVG is what the docs page embeds; HTML files are local previews):
+  flow-v1.svg             full vertical pipeline (hero)
+  stage-item-process.svg  one process_item per item: a post and a message
+                          become rows, a system notice becomes none
+
+Everything is vector: text stays live text with a web-safe font stack (Inter /
+JetBrains Mono with system fallbacks), matching the card.svg convention in this
+repo. No @font-face is embedded, so viewers without Inter get the fallback.
+
+Usage:
+  python3 gen_diagrams.py            # write SVG + HTML previews
+  python3 gen_diagrams.py --render   # also rasterize PNGs via headless Chrome (macOS)
+"""
+import pathlib, subprocess, sys
+
+SCRIPT_DIR = pathlib.Path(__file__).resolve().parent
+OUT_DIR = SCRIPT_DIR
+
+CREAM = "#FCF3D8"; CREAM_SOFT = "#F6F4E9"
+MAROON = "#532638"; MAROON_INK = "#2A121B"; CORAL = "#BE5133"
+PEACH = "#E59A63"; PALM = "#27E62B"; PALM_INK = "#16A534"
+RULE = "rgba(42,18,27,0.16)"; MUTED = "rgba(42,18,27,0.58)"
+# Precomputed color-mix(in oklab, PEACH 11%, CREAM). Kept as a literal because a
+# standalone SVG loaded via <img> must not depend on CSS Color 5 support: an
+# unparsed fill falls back to black, not to the intended tint.
+APP_FILL = "#FAE9CB"
+# Precomputed color-mix(in oklab, CORAL 60%, transparent) over CREAM_SOFT.
+SUB_STROKE = "#D28D6F"
+
+SANS = "Inter, 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif"
+MONO = "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace"
+
+GF = ('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&'
+      'family=Source+Serif+4:ital,wght@0,400;0,600;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap')
+HEAD = ('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+        f'<link href="{GF}" rel="stylesheet">')
+
+
+# ─────────────────────────── SVG helpers (stages) ───────────────────────────
+def _stroke(base, hl):
+    return (PALM, 4.0) if hl else base
+
+
+def _esc(t):
+    return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def tlines(cx, cy, lines, size, weight=600, color=MAROON_INK, mono=False):
+    fam = MONO if mono else SANS
+    lh = size * 1.16
+    y0 = cy - lh * (len(lines) - 1) / 2
+    spans = "".join(
+        f'<tspan x="{cx}" y="{y0 + i*lh:.1f}">{_esc(t)}</tspan>' for i, t in enumerate(lines))
+    return (f'<text text-anchor="middle" dominant-baseline="central" '
+            f'font-family="{fam}" font-size="{size}" font-weight="{weight}" '
+            f'fill="{color}">{spans}</text>')
+
+
+def logic(x, y, w, h, lines, *, hl=False, size=26, mono=False, sub=None):
+    st, sw = _stroke((MAROON, 2.4), hl)
+    body = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" '
+            f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>')
+    if sub:
+        body += tlines(x + w/2, y + h/2 - 12, lines, size, mono=mono)
+        body += tlines(x + w/2, y + h/2 + 22, [sub], 19, weight=500, color=MUTED)
+    else:
+        body += tlines(x + w/2, y + h/2, lines, size, mono=mono)
+    return body
+
+
+def data(x, y, w, h, lines, *, hl=False, size=23, mono=True):
+    st, sw = _stroke((MAROON, 2.4), hl)
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="5" '
+            f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
+            + tlines(x + w/2, y + h/2, lines, size, mono=mono))
+
+
+def bullet(x, y, w, h, lines, *, hl=False, size=21):
+    st, sw = _stroke((MAROON, 2.4), hl)
+    r = h / 2
+    d = f"M {x} {y} L {x+w-r} {y} A {r} {r} 0 0 1 {x+w-r} {y+h} L {x} {y+h} Z"
+    return (f'<path d="{d}" fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
+            + tlines(x + (w-r)/2 + 2, y + h/2, lines, size, mono=True))
+
+
+def app(x, y, w, h, label, *, hl=False):
+    st, sw = _stroke((CORAL, 2.6), hl)
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" '
+            f'fill="{APP_FILL}" stroke="{st}" stroke-width="{sw}"/>'
+            + tlines(x + w/2, y + 26, [label], 19, weight=600, color=CORAL, mono=True))
+
+
+def pc(x, y, w, h, label, *, hl=False):
+    st, sw = _stroke((MAROON, 2.2), hl)
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="11" '
+            f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
+            + tlines(x + w/2, y + 24, [label], 18, weight=600, color=MUTED, mono=True))
+
+
+def arrow(x1, y, x2):
+    return (f'<line x1="{x1}" y1="{y}" x2="{x2-11}" y2="{y}" stroke="{MAROON}" '
+            f'stroke-width="2.6" marker-end="url(#ah)"/>')
+
+
+def bind(x1, y, x2):
+    return (f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{MAROON}" '
+            f'stroke-width="2.4" stroke-dasharray="7 6"/>')
+
+
+DEFS = (f'<defs><marker id="ah" markerWidth="13" markerHeight="12" refX="10" refY="4" '
+        f'orient="auto" markerUnits="userSpaceOnUse">'
+        f'<path d="M0 0 L11 4 L0 8 Z" fill="{MAROON}"/></marker></defs>')
+
+
+def item_process_svg():
+    """One process_item per item. A post (DiscordThread) and a conversation
+    message are chunked and embedded into ChunkEmbedding rows; a system notice
+    (here a member join, message type 7) returns before reading anything."""
+    APP_X = 270; APP_Y = 40; APP_H = 616
+    PADX = 30; ITEM_W = 214; ITEM_H = 62; GAPF = 40
+    PC_PADX = 28; XFM_W = 340; XFM_H = 88; GAPX = 36; OUT_W = 214; OUT_H = 58
+    PCW = PC_PADX + XFM_W + GAPX + OUT_W + PC_PADX; PCH = 156
+    APP_W = PADX + ITEM_W + GAPF + PCW + PADX
+    TGT_W = 184
+    TGT_X = APP_X + APP_W + 40
+    W = TGT_X + TGT_W + 40; H = APP_Y + APP_H + 32
+
+    item_x = APP_X + PADX
+    pc_x = item_x + ITEM_W + GAPF
+    xfm_x = pc_x + PC_PADX
+    out_x = xfm_x + XFM_W + GAPX
+    SRC = (40, APP_Y, 190, APP_H)
+
+    s = [DEFS]
+    s.append(logic(*SRC, ["Discord"], size=26, sub="channels"))
+    s.append(app(APP_X, APP_Y, APP_W, APP_H, "CocoIndex App"))
+    s.append(logic(TGT_X, APP_Y, TGT_W, APP_H, ["Postgres"], size=26, sub="pgvector"))
+
+    rows = [
+        (162, ["DiscordThread", "a forum post"], True),
+        (340, ["DiscordMessage", "a chat message"], True),
+        (518, ["DiscordMessage", "a join notice"], False),
+    ]
+    for cy, label, embeds in rows:
+        s.append(bind(SRC[0] + SRC[2], cy, item_x))
+        s.append(data(item_x, cy - ITEM_H/2, ITEM_W, ITEM_H, label, size=18))
+        s.append(arrow(item_x + ITEM_W, cy, pc_x))
+        s.append(pc(pc_x, cy - PCH/2, PCW, PCH, "process_item", hl=embeds))
+        if embeds:
+            s.append(logic(xfm_x, cy - XFM_H/2 + 12, XFM_W, XFM_H,
+                           ["Chunk & embed"], hl=True, size=24, sub="read_text() · RecursiveSplitter"))
+            s.append(arrow(xfm_x + XFM_W, cy + 12, out_x))
+            s.append(bullet(out_x, cy + 12 - OUT_H/2, OUT_W, OUT_H,
+                            ["ChunkEmbedding", "rows"], hl=True, size=18))
+            s.append(bind(out_x + OUT_W, cy + 12, TGT_X))
+        else:
+            s.append(logic(xfm_x, cy - XFM_H/2 + 12, XFM_W, XFM_H,
+                           ["Not a conversation"], size=22, sub="returns · no rows"))
+
+    ex = APP_X + APP_W / 2
+    for dy in (-16, 0, 16):
+        s.append(f'<circle cx="{ex}" cy="{626 + dy}" r="5" fill="{MUTED}"/>')
+    return W, H, "".join(s)
+
+
+# ─────────────────────────── flow (hero), as SVG ───────────────────────────
+# Vector port of the previous flow.html: same vertical pipeline, same shape
+# language (rounded = logic, square-ish = data, flag = target state,
+# peach = component, dashed = per-chunk sub-component).
+
+def _shape(kind, x, y, w, h, st, sw):
+    if kind == "logic":
+        return (f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="18" '
+                f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>')
+    if kind == "data":
+        return (f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="5" '
+                f'fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>')
+    # target state: flag shape, rounded on the trailing edge. The radius is
+    # clamped so the small legend swatch keeps the same silhouette.
+    rl, rr = 4, min(22, h / 2)
+    d = (f"M {x+rl:.0f} {y:.0f} L {x+w-rr:.0f} {y:.0f} A {rr} {rr} 0 0 1 {x+w:.0f} {y+rr:.0f} "
+         f"L {x+w:.0f} {y+h-rr:.0f} A {rr} {rr} 0 0 1 {x+w-rr:.0f} {y+h:.0f} "
+         f"L {x+rl:.0f} {y+h:.0f} A {rl} {rl} 0 0 1 {x:.0f} {y+h-rl:.0f} "
+         f"L {x:.0f} {y+rl:.0f} A {rl} {rl} 0 0 1 {x+rl:.0f} {y:.0f} Z")
+    return f'<path d="{d}" fill="{CREAM}" stroke="{st}" stroke-width="{sw}"/>'
+
+
+def _text(cx, y, text, *, size, weight=600, color=MAROON_INK, mono=False, track=None):
+    ls = f' letter-spacing="{track}"' if track else ""
+    return (f'<text x="{cx:.0f}" y="{y:.0f}" text-anchor="middle" dominant-baseline="central" '
+            f'font-family="{MONO if mono else SANS}" font-size="{size}" '
+            f'font-weight="{weight}" fill="{color}"{ls}>{_esc(text)}</text>')
+
+
+FNODE_H = 104
+
+
+def fnode(cx, y, w, kind, cap, ttl, sub="", *, mono=True, hl=False, h=FNODE_H):
+    x = cx - w / 2
+    st, sw = (PALM_INK, 3.0) if hl else (MAROON, 1.8)
+    s = [_shape(kind, x, y, w, h, st, sw)]
+    s.append(_text(cx, y + 26, cap.upper(), size=14, color=MUTED, mono=True, track="1.9"))
+    s.append(_text(cx, y + h / 2 + 4, ttl, size=24 if mono else 26, mono=mono))
+    if sub:
+        s.append(_text(cx, y + h - 20, sub, size=18, weight=400, color=MUTED))
+    return "".join(s)
+
+
+def vdown(cx, y, length=42):
+    """Vertical connector with a solid arrowhead, matching the CSS version."""
+    y2 = y + length
+    return (f'<line x1="{cx:.0f}" y1="{y:.0f}" x2="{cx:.0f}" y2="{y2-9:.0f}" '
+            f'stroke="{MAROON}" stroke-width="2.6"/>'
+            f'<path d="M {cx-7:.0f} {y2-9:.0f} L {cx+7:.0f} {y2-9:.0f} L {cx:.0f} {y2:.0f} Z" '
+            f'fill="{MAROON}"/>')
+
+
+def fcomp(cx, y, w, h, cap_mono, cap_reg):
+    x = cx - w / 2
+    return ("".join([
+        f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="24" '
+        f'fill="{APP_FILL}" stroke="{CORAL}" stroke-width="2"/>',
+        _text(cx, y + 32, cap_mono.upper(), size=16, color=CORAL, mono=True, track="1.3"),
+        _text(cx, y + 58, cap_reg, size=17, weight=500, color=MUTED),
+    ]))
+
+
+def fsubcomp(cx, y, w, h, cap):
+    x = cx - w / 2
+    return ("".join([
+        f'<rect x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" rx="20" '
+        f'fill="{CREAM_SOFT}" stroke="{SUB_STROKE}" stroke-width="1.8" '
+        f'stroke-dasharray="8 7"/>',
+        _text(cx, y + 30, cap.upper(), size=14, color=MUTED, mono=True, track="1.1"),
+    ]))
+
+
+VGAP = 42          # arrow length
+COMP_PAD_T = 82    # component top pad through both caption lines
+COMP_PAD_B = 30
+COMP_PAD_X = 34
+SUB_PAD_T = 56     # sub-component top pad through its single caption line
+SUB_PAD_B = 26
+SUB_PAD_X = 28
+
+
+def flow_svg():
+    W = 1240
+    CX = W / 2
+    COMP_W = W - 120
+    NODE_W = 760
+    INNER_W = COMP_W - 2 * COMP_PAD_X
+    SUB_W = INNER_W
+    SUB_INNER_W = SUB_W - 2 * SUB_PAD_X
+
+    SUB_H = SUB_PAD_T + FNODE_H + VGAP + FNODE_H + SUB_PAD_B
+    COMP_H = COMP_PAD_T + FNODE_H + VGAP + FNODE_H + VGAP + SUB_H + COMP_PAD_B
+
+    s = []
+    y = 48
+
+    # eyebrow
+    s.append(f'<circle cx="60" cy="{y+11}" r="6" fill="{CORAL}"/>')
+    s.append(f'<text x="82" y="{y+11}" dominant-baseline="central" font-family="{MONO}" '
+             f'font-size="21" font-weight="600" fill="{CORAL}" letter-spacing="3.8">'
+             f'COCOINDEX · DISCORD EMBEDDING FLOW</text>')
+    y += 30 + 28
+
+    s.append(fnode(CX, y, NODE_W, "logic", "Source", "discord.DiscordChannel",
+                   "one per channel ID · forum, text or announcement"))
+    y += FNODE_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    s.append(fnode(CX, y, NODE_W, "data", "Data", "channel.items()",
+                   "a DiscordThread per post or thread · a DiscordMessage per message"))
+    y += FNODE_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    # ── processing component ──
+    s.append(fcomp(CX, y, COMP_W, COMP_H, "Processing component",
+                   "mount_each → process_item (per item, memoized)"))
+    iy = y + COMP_PAD_T
+    s.append(fnode(CX, iy, INNER_W, "logic", "Transform · Markdown",
+                   "read_text() → RecursiveSplitter",
+                   "title, tags and every message · chunks of 2000 / 500 overlap", hl=True))
+    iy += FNODE_H
+    s.append(vdown(CX, iy)); iy += VGAP
+    s.append(fnode(CX, iy, INNER_W, "data", "Data", "chunks",
+                   "plus the item's link back to Discord and its title"))
+    iy += FNODE_H
+    s.append(vdown(CX, iy)); iy += VGAP
+
+    s.append(fsubcomp(CX, iy, SUB_W, SUB_H, "coco.map → _emit_chunk (per chunk)"))
+    sy = iy + SUB_PAD_T
+    s.append(fnode(CX, sy, SUB_INNER_W, "logic", "Transform",
+                   "SentenceTransformerEmbedder.embed",
+                   "chunk text → embedding (all-MiniLM-L6-v2, 384-d)"))
+    sy += FNODE_H
+    s.append(vdown(CX, sy)); sy += VGAP
+    s.append(fnode(CX, sy, SUB_INNER_W, "target", "Target state",
+                   "declare_row → ChunkEmbedding",
+                   "id · url · title · text · embedding"))
+    y += COMP_H
+    s.append(vdown(CX, y)); y += VGAP
+
+    s.append(fnode(CX, y, NODE_W, "logic", "Target", "Postgres · pgvector",
+                   "discord_embeddings table · cosine distance"))
+    y += FNODE_H
+
+    # ── legend ──
+    y += 38
+    s.append(f'<line x1="60" y1="{y}" x2="{W-60}" y2="{y}" stroke="{RULE}" stroke-width="1.5"/>')
+    y += 24
+    items = [("logic", "Source / transform"), ("data", "Data (state)"),
+             ("target", "Target state"), ("comp", "Processing component")]
+    widths = [40 + 12 + len(label) * 8.9 for _, label in items]
+    total = sum(widths) + 34 * (len(items) - 1)
+    lx = CX - total / 2
+    for (kind, label), iw in zip(items, widths):
+        if kind == "comp":
+            s.append(f'<rect x="{lx:.0f}" y="{y:.0f}" width="40" height="26" rx="8" '
+                     f'fill="{APP_FILL}" stroke="{CORAL}" stroke-width="1.8"/>')
+        else:
+            s.append(_shape(kind, lx, y, 40, 26, MAROON, 1.8))
+        s.append(f'<text x="{lx+52:.0f}" y="{y+13}" dominant-baseline="central" '
+                 f'font-family="{SANS}" font-size="18" font-weight="400" fill="{MUTED}">'
+                 f'{label}</text>')
+        lx += iw + 34
+    y += 26 + 40
+
+    return W, int(y), "".join(s)
+
+
+def svg_file(w, h, body, *, pad=0):
+    """Standalone SVG: cream plate, padded content, no external assets."""
+    ow, oh = w + 2 * pad, h + 2 * pad
+    inner = f'<g transform="translate({pad},{pad})">{body}</g>' if pad else body
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{ow}" height="{oh}" '
+            f'viewBox="0 0 {ow} {oh}" role="img">'
+            f'<rect width="{ow}" height="{oh}" fill="{CREAM}"/>{inner}</svg>')
+
+
+def page(w, h, body, *, pad=0):
+    return (f'<!doctype html><html><head><meta charset="utf-8">'
+            f'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
+            f'<link href="{GF}" rel="stylesheet"><style>'
+            f'*{{margin:0;padding:0;box-sizing:border-box}}'
+            f'body{{background:{CREAM};padding:{pad}px}}'
+            f'svg{{display:block}}</style></head><body>'
+            f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" '
+            f'viewBox="0 0 {w} {h}">{body}</svg></body></html>')
+
+
+# ─────────────────────────── render all ───────────────────────────
+DIAGRAMS = {
+    "flow-v1": (flow_svg, 0),
+    "stage-item-process": (item_process_svg, 34),
+}
+
+sizes = {}
+for name, (fn, pad) in DIAGRAMS.items():
+    w, h, body = fn()
+    (OUT_DIR / f"{name}.svg").write_text(svg_file(w, h, body, pad=pad))
+    # HTML preview: same SVG, plus the webfont links so a local browser shows
+    # the intended Inter / JetBrains Mono rendering.
+    (OUT_DIR / f"{name}.html").write_text(page(w, h, body, pad=pad))
+    sizes[name] = (w + 2 * pad, h + 2 * pad)
+    print(f"wrote {name}.svg + {name}.html")
+
+if "--render" in sys.argv:
+    chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    for name, (ww, hh) in sizes.items():
+        subprocess.run([
+            chrome, "--headless=new", "--hide-scrollbars", "--no-sandbox",
+            "--force-color-profile=srgb", "--virtual-time-budget=8000",
+            f"--screenshot={OUT_DIR / (name + '.png')}", f"--window-size={ww},{hh}",
+            (OUT_DIR / f"{name}.html").as_uri(),
+        ], check=True)
+        print(f"rendered {name}.png")
